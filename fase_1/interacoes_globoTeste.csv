@@ -1,0 +1,50 @@
+id_conteudo,id_usuario,watch_duration_seconds,comment_text,tipo_interacao,nome_conteudo
+123,xyz,??,  muito   bom  ,comment,Fatástico
+abc,1,30,  comentário   com   espaços  ,view,  Encontro  
+456,2,15,  teste   de   erro   aqui  ,like,Jornal Hoje
+ 789 ,xyz,??,  isso   é   um   comentário  ,share,G1 Notícias
+123,,60,    muito   bom    ,view,Jornal Hoje
+,xyz,15,  comentário   com   espaços  ,comment,
+12.5,2,15,  teste   de   erro   aqui  ,vote_bbb,Fatástico
+456,xyz,??,  muito   bom  ,view,Globo Esporte
+123,four,15,  isso   é   um   comentário  ,comment,
+123,xyz,20.5,  comentário   com   espaços  ,like,Jornal Hoje
+456,1,,  teste   de   erro   aqui  ,share,Fatástico
+789,xyz,60,    muito   bom    ,comment,Globo Esporte
+abc,2,20.5,  comentário   com   espaços  ,like,Jornal Hoje
+123,2,30,  isso   é   um   comentário  ,comment,Jornal Hoje
+,3,??,  teste   de   erro   aqui  ,share,Fantástico
+456,1,15,  muito   bom  ,comment,G1 Notícias
+12.5,xyz,60,  isso   é   um   comentário  ,like,Globo Esporte
+789,2,20.5,  comentário   com   espaços  ,vote_bbb,Jornal Hoje
+,xyz,,  teste   de   erro   aqui  ,share,Fatástico
+123,2,30,  muito   bom  ,comment,Jornal Hoje
+,3,20.5,  comentário   com   espaços  ,view,Fantástico
+789,four,60,  isso   é   um   comentário  ,comment,Globo Esporte
+456,xyz,??,    muito   bom    ,like,Jornal Hoje
+123,2,15,  comentário   com   espaços  ,vote_bbb,G1 Notícias
+abc,xyz,,  teste   de   erro   aqui  ,comment,Fantástico
+123,3,30,  muito   bom  ,share,Jornal Hoje
+789,,??,  comentário   com   espaços  ,like,Fatástico
+,xyz,60,  isso   é   um   comentário  ,comment,Jornal Hoje
+12.5,1,20.5,  teste   de   erro   aqui  ,view,Globo Esporte
+abc,2,15,  muito   bom  ,like,Fatástico
+456,xyz,30,  comentário   com   espaços  ,comment,Jornal Hoje
+123,2,??,  isso   é   um   comentário  ,view,G1 Notícias
+,xyz,60,    muito   bom    ,like,Fantástico
+456,2,30,  comentário   com   espaços  ,comment,Fatástico
+123,four,20.5,  teste   de   erro   aqui  ,vote_bbb,Jornal Hoje
+456,3,15,  muito   bom  ,view,Globo Esporte
+123,xyz,60,  comentário   com   espaços  ,comment,Fatástico
+,1,,  teste   de   erro   aqui  ,like,Jornal Hoje
+abc,xyz,??,  muito   bom  ,comment,G1 Notícias
+456,2,15,  isso   é   um   comentário  ,share,Fantástico
+123,xyz,30,    muito   bom    ,vote_bbb,Jornal Hoje
+12.5,3,60,  comentário   com   espaços  ,comment,Globo Esporte
+456,xyz,30,  teste   de   erro   aqui  ,view,Fatástico
+789,four,??,  muito   bom  ,comment,Jornal Hoje
+,1,15,  comentário   com   espaços  ,like,Globo Esporte
+abc,xyz,??,  isso   é   um   comentário  ,comment,G1 Notícias
+456,,60,    muito   bom    ,vote_bbb,Jornal Hoje
+123,3,20.5,  comentário   com   espaços  ,comment,Fantástico
+456,2,15,  teste   de   erro   aqui  ,view,G1 Notícias
