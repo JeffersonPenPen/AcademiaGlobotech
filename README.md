@@ -11,7 +11,7 @@ Repositório para projetos desenvolvidos nos oito módulos (Fases) da Academia G
 
 **MÓDULO 2: Programação Orientada a Objetos**  
 **Datas:** 26 de Maio de 2025 a 11 de Junho de 2025  
-**Professor:** Alex Cavalera (alexlimacavalera@gmail.com) 
+**Professor:** Alex Cavalera (alexlimacavalera@gmail.com)  
 **Projeto:** Fase 2 - Análise de Engajamento de Mídias Globo com Orientação a Objetos  
 **Entregue em:**  
 **Nota:**
