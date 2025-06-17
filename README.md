@@ -16,3 +16,51 @@ Repositório para projetos desenvolvidos nos oito módulos (Fases) da Academia G
 **Entregue em:** 13 de Junho de 2025, as 22:31
 **Desenvolvido:** Entre 6 e 9 de Junho, baseado nas diretrizes apresentadas em "Fase 2 - Análise de Engajamento de Mídias da Globo com Orientação a Objetos.pdf". Reformulação direta do Projeto Fase 1, utilizando sempre que possível estruturas e formatação oriundas do Projeto de Lógica de Programação. Apresentado ao Grupo no dia 9 de Junho para comentários de Debug. Demonstração de planejamento, organização, modelagem e execução do projeto em call no dia 11 de Junho. Referências: Jupyter Notebook Módulo 1 e 2, "Aprenda Python 3 do Jeito Certo", SHAW, Zed., discussão com colegas de classe.
 **Nota:**
+
+**MÓDULO 3: Introdução a Algoritmos e Estrutura de Dados**  
+**Datas:** 16 de Junho de 2025 a 7 de Julho de 2025  
+**Professor:** Bruno Bragança (bbmendes@gmail.com) 
+**Projeto:** Fase 3 - 
+**Entregue em:** 
+**Desenvolvido:** 
+**Nota:**
+
+**MÓDULO 4: Banco de Dados No-SQL (MongoDB)**  
+**Datas:** 11 de Julho de 2025 a 30 de Julho de 2025  
+**Professor:**  
+**Projeto:** Fase 4 - 
+**Entregue em:** 
+**Desenvolvido:** 
+**Nota:**
+
+**MÓDULO 5: **  
+**Datas:** 11 de Julho de 2025 a 30 de Julho de 2025  
+**Professor:**  
+**Projeto:** Fase 4 - 
+**Entregue em:** 
+**Desenvolvido:** 
+**Nota:**
+
+**MÓDULO 6: **  
+**Datas:** 11 de Julho de 2025 a 30 de Julho de 2025  
+**Professor:**  
+**Projeto:** Fase 4 - 
+**Entregue em:** 
+**Desenvolvido:** 
+**Nota:**
+
+**MÓDULO 7: Banco de Dados No-SQL (MongoDB)**  
+**Datas:** 11 de Julho de 2025 a 30 de Julho de 2025  
+**Professor:**  
+**Projeto:** Fase 4 - 
+**Entregue em:** 
+**Desenvolvido:** 
+**Nota:**
+
+**MÓDULO 8: **  
+**Datas:** 11 de Julho de 2025 a 30 de Julho de 2025  
+**Professor:**  
+**Projeto:** Fase 4 - 
+**Entregue em:** 
+**Desenvolvido:** 
+**Nota:**
