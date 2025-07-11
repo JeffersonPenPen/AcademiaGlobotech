@@ -21,8 +21,9 @@ Repositório para projetos desenvolvidos nos oito módulos (Fases) da Academia G
 **Datas:** 16 de Junho de 2025 a 7 de Julho de 2025  
 **Professor:** Bruno Bragança (bbmendes@gmail.com) 
 **Projeto:** "Olho no Lance 3.0" - Fase 3: Análise de Engajamento de Mídias Globo com Estruturas de Dados   
-**Entregue em:** 07 de Julho de 2025, as 22:15.   
+**Entregue em:** 07 de Julho de 2025, as 22:15. - Pequenas alterações posteriores.   
 **Desenvolvido:** Baseado nas diretrizes apresentadas no arquivo de descrição do projeto. A partir dessa fase, foi incluído um launcher para unificar todas as fases do Projeto Academia Globotech num único menu e facilitar o acompanhamento da evolução, tanto do programa em si quanto do aprendizado. Referências: Jupyter Notebook Módulo 1, 2 e 3, "Aprenda Python 3 do Jeito Certo", SHAW, Zed., discussão com colegas de classe.   
+**Observações:** A partir desse módulo, criei um launcher para unir os projetos de todas as fases num único menu inicial para facilitar a visualização.
 **Nota:**
 
 **MÓDULO 4: Banco de Dados No-SQL (MongoDB)**  
