@@ -9,7 +9,7 @@ def abrir_fase(fase):
 
 def menu_launcher():
     while True:
-        print("\n->-> OLHO NO LANCE - LAUNCHER <-<-")
+        print("\n->-> TÁ NA GLOBO - LAUNCHER <-<-")
         print("1. Abrir Projeto Fase 1")
         print("2. Abrir Projeto Fase 2")
         print("3. Abrir Projeto Fase 3")
