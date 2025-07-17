@@ -184,7 +184,7 @@ def main():
     """
     Função principal para orquestrar a análise.
     """
-    print("Iniciando Fase 1: Coleta e Estruturação Inicial de Dados de Engajamento Globo\n")
+    print("TÁ NA GLOBO Fase 1: Coleta e Estruturação Inicial de Dados de Engajamento Globo\n")
 
     # 1. Carregar dados do arquivo CSV para uma lista de listas
     dados_brutos_lista_de_listas = carregar_dados_de_arquivo_csv(NOME_ARQUIVO_CSV)
