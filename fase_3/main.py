@@ -72,7 +72,7 @@ def menu_ajuda():
 
 def main():
     while True:
-        print("\n->-> OLHO NO LANCE 3.0 <-<-")
+        print("\n->-> TÁ NA GLOBO 3.0 <-<-")
         print("1. Carregar Dados")
         print("2. Processar Interações da Fila")
         print("3. Relatórios")
