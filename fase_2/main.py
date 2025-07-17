@@ -1,6 +1,7 @@
 from analise.sistema import SistemaAnaliseEngajamento
 #Classe principal que gerencia os relatórios em sistema.py
 import os #Para verificar csv
+import subprocess #Adicionado para retornar ao launcher.
 
 def exibir_menu(): #Menu para Processamento de Dados e Seleção de Relatórios
     print("\n--- MENU PRINCIPAL ---")
@@ -8,6 +9,7 @@ def exibir_menu(): #Menu para Processamento de Dados e Seleção de Relatórios
     print("2. Gerar Relatório de Engajamento por Conteúdo")
     print("3. Gerar Relatório de Atividade de Usuários")
     print("4. Top Conteúdos por Tempo Total Consumido")
+    print("5. Voltar ao Launcher")
     print("0. Sair")
     return input("Escolha uma opção: ")
 
@@ -58,6 +60,12 @@ while True:
             sistema.gerar_relatorio_top_conteudos_consumidos(5) #Em sistema.py
         else:
             print("Primeiro processe o arquivo CSV (Opção 1).")
+
+    elif opcao == "5":
+        import subprocess #Biblioteca para abrir o arquivo launcher.py
+        print("Retornando ao launcher...")
+        subprocess.run(["python", "../launcher.py"])
+        break
 
     elif opcao == "0":
         print("Encerrando o programa.")
