@@ -4,7 +4,7 @@ Repositório para projetos desenvolvidos nos oito módulos (Fases) da Academia G
 
 **MÓDULO 1: Lógica de Programação em Python**  
 **Datas:** 05 de Maio de 2025 a 23 de Maio de 2025  
-**Professor:** Rogério  
+**Professor:** Rogério Mainardes  
 **Projeto:** Fase 1: Coleta e Estruturação Inicial de Dados de Engajamento Globo  
 **Entregue em:** 03 de Junho de 2025, às 23:17  
 **Nota:** 90
@@ -14,7 +14,7 @@ Repositório para projetos desenvolvidos nos oito módulos (Fases) da Academia G
 **Professor:** Alex Cavalera (alexlimacavalera@gmail.com)  
 **Projeto:** Fase 2 - Análise de Engajamento de Mídias Globo com Orientação a Objetos  
 **Entregue em:** 13 de Junho de 2025, as 22:31
-**Desenvolvido:** Entre 6 e 9 de Junho, baseado nas diretrizes apresentadas em "Fase 2 - Análise de Engajamento de Mídias da Globo com Orientação a Objetos.pdf". Reformulação direta do Projeto Fase 1, utilizando sempre que possível estruturas e formatação oriundas do Projeto de Lógica de Programação. Apresentado ao Grupo no dia 9 de Junho para comentários de Debug. Demonstração de planejamento, organização, modelagem e execução do projeto em call no dia 11 de Junho. Referências: Jupyter Notebook Módulo 1 e 2, "Aprenda Python 3 do Jeito Certo", SHAW, Zed., discussão com colegas de classe.  
+**Desenvolvido:** Entre 6 e 9 de Junho, baseado nas diretrizes apresentadas em "Fase 2 - Análise de Engajamento de Mídias da Globo com Orientação a Objetos.pdf". Reformulação direta do Projeto Fase 1, utilizando sempre que possível estruturas e formatação oriundas do Projeto de Lógica de Programação. Apresentado ao Grupo no dia 9 de Junho para comentários de Debug. Demonstração de planejamento, organização, modelagem e execução do projeto em call no dia 11 de Junho. **Referências:** Jupyter Notebook Módulo 1 e 2, "Aprenda Python 3 do Jeito Certo", SHAW, Zed., discussão com colegas de classe.  
 **Nota:**
 
 **MÓDULO 3: Introdução a Algoritmos e Estrutura de Dados**  
@@ -23,12 +23,12 @@ Repositório para projetos desenvolvidos nos oito módulos (Fases) da Academia G
 **Projeto:** "Olho no Lance 3.0" - Fase 3: Análise de Engajamento de Mídias Globo com Estruturas de Dados   
 **Entregue em:** 07 de Julho de 2025, as 22:15. - Pequenas alterações posteriores.   
 **Desenvolvido:** Baseado nas diretrizes apresentadas no arquivo de descrição do projeto. A partir dessa fase, foi incluído um launcher para unificar todas as fases do Projeto Academia Globotech num único menu e facilitar o acompanhamento da evolução, tanto do programa em si quanto do aprendizado. Referências: Jupyter Notebook Módulo 1, 2 e 3, "Aprenda Python 3 do Jeito Certo", SHAW, Zed., discussão com colegas de classe.   
-**Observações:** A partir desse módulo, criei um launcher para unir os projetos de todas as fases num único menu inicial para facilitar a visualização.
-**Nota:**
+**Observações:** A partir desse módulo, criei um launcher para unir os projetos de todas as fases num único menu inicial para facilitar a visualização.  
+**Nota:** 95
 
 **MÓDULO 4: Banco de Dados No-SQL (MongoDB)**  
 **Datas:** 11 de Julho de 2025 a 30 de Julho de 2025  
-**Professor:**  
+**Professor:** Rogério Mainardes  
 **Projeto:** Fase 4 - 
 **Entregue em:** 
 **Desenvolvido:** 
