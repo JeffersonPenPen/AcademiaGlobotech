@@ -1,8 +1,10 @@
 import os
+import sys
 from analise.sistema_fase3 import SistemaAnaliseEngajamento
+from analise.exportador import Exportador
 
 sistema = SistemaAnaliseEngajamento()
-
+os.chdir(os.path.dirname(__file__))
 
 def carregar_csv():
     caminho = "data/interacoes_globo.csv"
@@ -33,21 +35,21 @@ def menu_relatorios():
 
         op = input("Escolha uma opção: ")
         if op == "1":
-            sistema.relatorio1_top_conteudos_por_consumo()
+            print(sistema.relatorio1_top_conteudos_por_consumo())
         elif op == "2":
-            sistema.relatorio2_usuarios_mais_engajados()
+            print(sistema.relatorio2_usuarios_mais_engajados())
         elif op == "3":
-            sistema.relatorio3_engajamento_por_plataforma()
+            print(sistema.relatorio3_engajamento_por_plataforma())
         elif op == "4":
-            sistema.relatorio4_conteudos_mais_comentados()
+            print(sistema.relatorio4_conteudos_mais_comentados())
         elif op == "5":
-            sistema.relatorio5_total_interacoes_por_tipo()
+            print(sistema.relatorio5_total_interacoes_por_tipo())
         elif op == "6":
-            sistema.relatorio6_tempo_medio_por_plataforma()
+            print(sistema.relatorio6_tempo_medio_por_plataforma())
         elif op == "7":
-            sistema.relatorio7_comentarios_por_conteudo()
+            print(sistema.relatorio7_comentarios_por_conteudo())
         elif op == "8":
-            sistema.relatorio8_conteudos_mais_interagidos()
+            print(sistema.relatorio8_conteudos_mais_interagidos())
         elif op == "0":
             break
         else:
@@ -66,8 +68,14 @@ def menu_ajuda():
     print("\n3. Relatórios")
     print("- Exibe os relatórios estatísticos com base nas interações processadas.")
     print("- Após a visualização, digite 0 para retornar ao menu principal.")
+    print("\n4. Exportador de Relatórios")
+    print("- Exporta os relatórios em formato TXT.")
     print("\n0. Sair")
     print("- Encerra a execução do programa.")
+
+def menu_exportacao(sistema):
+    exportador = Exportador()
+    exportador.exportar_relatorios(sistema)
 
 
 def main():
@@ -76,7 +84,8 @@ def main():
         print("1. Carregar Dados")
         print("2. Processar Interações da Fila")
         print("3. Relatórios")
-        print("4. Ajuda")
+        print("4. Exportar Relatórios")
+        print("5. Ajuda")
         print("0. Sair")
 
         escolha = input("Escolha uma opção: ")
@@ -87,14 +96,15 @@ def main():
         elif escolha == "3":
             menu_relatorios()
         elif escolha == "4":
+            menu_exportacao(sistema)
+        elif escolha == "5":
             menu_ajuda()
         elif escolha == "0":
             print("Encerrando...")
-            break
+            sys.exit()
         else:
             print("[ERRO] Opção inválida.")
 
 
 if __name__ == "__main__":
     main()
-

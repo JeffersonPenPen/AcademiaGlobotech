@@ -1,0 +1,8 @@
+TÁ NA GLOBO: Total de Interações por Tipo
+
+->-> RELATÓRIO 5: Total de Interações por Tipo <-<-
+
+view_start: 107 interações
+like: 22 interações
+comment: 46 interações
+share: 12 interações
