@@ -1,0 +1,10 @@
+INSTRUÇÕES PARA FASE 4
+
+- Abrir o arquivo schema.sql
+- Rodar o script linha a linha até a notação "Executar Aplicação Python"
+- Executar a aplicação "fase_4.py"*
+- Voltar ao MySQL. Todas as tabelas estarão populadas. 
+- Rodar linha a linha abaixo do comentário "QUERIES"
+
+
+* Atualizar senha do banco de dados MySQL na biblioteca mysql.connector
