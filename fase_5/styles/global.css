@@ -89,8 +89,10 @@ form button:hover {
 .logo {
     display: block;
     margin: 0 auto 25px auto;
-    width: 80%;
-    max-width: 350px;
+    height: 60px;
+    width: auto;
+   /* width: 80%;*/
+   /* max-width: 350px;*/
 }
 .links-container {
     display: flex;
