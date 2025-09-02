@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Acessibilidade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../styles/global.css">
+</head>
+
+<body>
+  <main class="container my-5">
+    <img src="../assets/acessibilidade.png" alt="Acessibilidade" class="logo mb-4">
+    <p>Somos todos diferentes, e queremos ao máximo tornar o ambiente de trabalho um lugar seguro para cada um. Por
+      isso, precisamos conhecer melhor as suas necessidades.</p>
+    <br><br>
+    <p align="center"><b>Que tipos de acessibilidade você precisa?</b></p>
+    <br>
+    <div class="d-flex flex-wrap justify-content-center gap-3">
+      <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalFisica">Física /
+        Motora</button>
+      <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalVisual">Visual</button>
+      <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalAuditiva">Auditiva</button>
+      <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalCognitiva">Intelectual /
+        Cognitiva</button>
+    </div>
+    <div class="text-end mt-4">
+      <a href="skills.html" class="btn btn-primary">Avançar</a>
+    </div>
+  </main>
+
+  <div class="modal fade" id="modalFisica" tabindex="-1" aria-labelledby="modalFisicaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalFisicaLabel">Acessibilidade Física / Motora</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/submit-step1" method="post">
+            <div class="row g-4">
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-arrows-move"></i> Acesso e Deslocamento</h5>
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">Marque as adaptações de acesso que você necessita:</p>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="vaga_pcd"
+                        id="vagaPcd"><label class="form-check-label" for="vagaPcd">Vaga de estacionamento reservada e
+                        próxima</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="rampas_elevadores"
+                        id="rampas"><label class="form-check-label" for="rampas">Acesso por rampas e/ou
+                        elevadores</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="portas_largas"
+                        id="portasLargas"><label class="form-check-label" for="portasLargas">Portas e corredores com
+                        largura acessível</label></div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="banheiro_acessivel"
+                        id="banheiroAcessivel"><label class="form-check-label" for="banheiroAcessivel">Banheiros
+                        adaptados com barras de apoio</label></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-display"></i> Estação de Trabalho</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-3"><label for="mesaTrabalho" class="form-label">Tipo de mesa ideal:</label><select
+                        class="form-select" id="mesaTrabalho">
+                        <option selected>Selecione uma opção...</option>
+                        <option value="padrao">Padrão</option>
+                        <option value="altura_ajustavel">Com altura ajustável</option>
+                      </select></div>
+                    <div class="mb-3"><label class="form-label">Recursos da cadeira:</label>
+                      <div class="form-check"><input class="form-check-input" type="checkbox" value="ergonomica"
+                          id="cadeiraErgo"><label class="form-check-label" for="cadeiraErgo">Cadeira Ergonômica (NR-17)
+                          <a href="#" class="badge bg-info text-decoration-none" tabindex="0" data-bs-toggle="popover"
+                            data-bs-trigger="focus" data-bs-title="Norma Regulamentadora 17"
+                            data-bs-content="Refere-se a uma cadeira que atende aos parâmetros de ergonomia definidos pela legislação, visando garantir conforto, segurança e desempenho eficiente.">?</a></label>
+                      </div>
+                      <div class="form-check"><input class="form-check-input" type="checkbox" value="apoio_braco"
+                          id="apoioBraco"><label class="form-check-label" for="apoioBraco">Com apoios de braço
+                          ajustáveis</label></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-4">
+              <div class="card-header">
+                <h5 class="card-title mb-0"><i class="bi bi-person-wheelchair"></i> Equipamentos de Mobilidade</h5>
+              </div>
+              <div class="card-body">
+                <div class="accordion" id="accordionMobilidade">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne"><button class="accordion-button collapsed"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false"
+                        aria-controls="collapseOne">Utiliza cadeira de rodas? Clique aqui para mais detalhes.</button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                      data-bs-parent="#accordionMobilidade">
+                      <div class="accordion-body"><strong>Qual o tipo?</strong>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="tipoCadeira"
+                            id="cadeiraManual" value="manual"><label class="form-check-label"
+                            for="cadeiraManual">Manual</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="tipoCadeira"
+                            id="cadeiraMotorizada" value="motorizada"><label class="form-check-label"
+                            for="cadeiraMotorizada">Motorizada</label></div>
+                        <hr><strong>Necessidades associadas:</strong>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="espaco_manobra"
+                            id="espacoManobra"><label class="form-check-label" for="espacoManobra">Espaço para manobra
+                            na mesa de trabalho</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" value="ponto_energia"
+                            id="pontoEnergia"><label class="form-check-label" for="pontoEnergia">Ponto de energia
+                            próximo para recarga</label></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalVisual" tabindex="-1" aria-labelledby="modalVisualLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalVisualLabel">Acessibilidade Visual</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/submit-step2" method="post">
+            <div class="row g-4">
+              <div class="col-lg-7">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-pc-display"></i> Acessibilidade Digital</h5>
+                  </div>
+                  <div class="card-body">
+                    <p>Qual tecnologia assistiva você mais utiliza?</p>
+                    <div class="btn-group w-100" role="group" aria-label="Tecnologia Assistiva"><input type="radio"
+                        class="btn-check" name="tec_assistiva" id="radioLeitor" autocomplete="off"><label
+                        class="btn btn-outline-primary" for="radioLeitor">Leitor de Tela</label><input type="radio"
+                        class="btn-check" name="tec_assistiva" id="radioAmpliador" autocomplete="off"><label
+                        class="btn btn-outline-primary" for="radioAmpliador">Ampliador de Tela</label><input
+                        type="radio" class="btn-check" name="tec_assistiva" id="radioContraste"
+                        autocomplete="off"><label class="btn btn-outline-primary" for="radioContraste">Alto
+                        Contraste</label></div>
+                    <div class="mt-3"><label for="softwareNome" class="form-label">Se utiliza algum software, qual o
+                        nome?</label><input type="text" class="form-control" id="softwareNome"
+                        placeholder="Ex: NVDA, JAWS, ZoomText..."></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-lightbulb"></i> Preferências de Ambiente</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="mb-3"><label for="iluminacaoRange" class="form-label">Nível de iluminação
+                        preferencial:</label><input type="range" class="form-range" min="1" max="5"
+                        id="iluminacaoRange">
+                      <div class="d-flex justify-content-between"><small>Baixa</small><small>Alta</small></div>
+                    </div>
+                    <div class="mb-3"><label for="corFundo" class="form-label">Cor de fundo preferida em
+                        sistemas:</label><input type="color" class="form-control form-control-color" id="corFundo"
+                        value="#FFFFFF" title="Escolha sua cor"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card mt-4">
+              <div class="card-header">
+                <h5 class="card-title mb-0"><i class="bi bi-signpost-split"></i> Navegação no Ambiente Físico</h5>
+              </div>
+              <div class="card-body">
+                <p>Quais recursos de sinalização facilitariam sua locomoção?</p>
+                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch"
+                    id="pisoTatil"><label class="form-check-label" for="pisoTatil">Piso tátil <a href="#"
+                      class="badge bg-info text-decoration-none" tabindex="0" data-bs-toggle="popover"
+                      data-bs-trigger="focus" data-bs-title="O que é Piso Tátil?"
+                      data-bs-content="É uma sinalização no chão com relevo para guiar pessoas com deficiência visual. Existem dois tipos: o direcional (linhas) para indicar o caminho e o de alerta (círculos) para indicar obstáculos ou perigo.">?</a></label>
+                </div>
+                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch"
+                    id="placasBraille"><label class="form-check-label" for="placasBraille">Placas em Braille</label>
+                </div>
+                <div class="form-check form-switch"><input class="form-check-input" type="checkbox" role="switch"
+                    id="fontesGrandes"><label class="form-check-label" for="fontesGrandes">Sinalização com fontes
+                    ampliadas</label></div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalAuditiva" tabindex="-1" aria-labelledby="modalAuditivaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalAuditivaLabel">Acessibilidade Auditiva</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/submit-step3" method="post">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title mb-0"><i class="bi bi-people-fill"></i> Recursos de Comunicação em Reuniões</h5>
+              </div>
+              <div class="card-body table-responsive">
+                <p>Para cada cenário, marque os recursos que você necessita:</p>
+                <table class="table table-bordered text-center">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="text-start">Cenário</th>
+                      <th>Intérprete de Libras</th>
+                      <th>Legendas ao Vivo</th>
+                      <th>Material Pós-Reunião</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="text-start">Reuniões online</td>
+                      <td><input class="form-check-input" type="checkbox" value="libras_online"></td>
+                      <td><input class="form-check-input" type="checkbox" value="legendas_online"></td>
+                      <td><input class="form-check-input" type="checkbox" value="material_online"></td>
+                    </tr>
+                    <tr>
+                      <td class="text-start">Treinamentos presenciais</td>
+                      <td><input class="form-check-input" type="checkbox" value="libras_presencial"></td>
+                      <td><input class="form-check-input" type="checkbox" value="legendas_presencial"></td>
+                      <td><input class="form-check-input" type="checkbox" value="material_presencial"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row g-4 mt-1">
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-chat-dots"></i> Comunicação no Dia a Dia</h5>
+                  </div>
+                  <div class="card-body"><label for="comunicacaoDiaria" class="form-label">Forma de comunicação
+                      preferencial para demandas rápidas:</label><select class="form-select" id="comunicacaoDiaria">
+                      <option selected>Escolha uma opção...</option>
+                      <option value="chat">Chat (Teams, Slack, etc.)</option>
+                      <option value="email">E-mail</option>
+                    </select><label for="leituraLabial" class="form-label mt-3">Seu nível de conforto com leitura
+                      labial:</label>
+                    <div class="progress" style="height: 20px;">
+                      <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50"
+                        aria-valuemin="0" aria-valuemax="100">50%</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card h-100">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-exclamation-triangle"></i> Alertas e Segurança</h5>
+                  </div>
+                  <div class="card-body">
+                    <p>Para alarmes de emergência, você precisa de:</p>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="alerta_visual"
+                        id="alertaVisual"><label class="form-check-label" for="alertaVisual">Alertas visuais (luzes) <a
+                          href="#" class="badge bg-info text-decoration-none" tabindex="0" data-bs-toggle="popover"
+                          data-bs-trigger="focus" data-bs-title="O que são Alertas Visuais?"
+                          data-bs-content="São sistemas de luzes (geralmente estroboscópicas, que piscam com alta intensidade) que são ativados junto com os alarmes sonoros para alertar pessoas com deficiência auditiva sobre uma emergência.">?</a></label>
+                    </div>
+                    <div class="form-check"><input class="form-check-input" type="checkbox" value="alerta_vibratorio"
+                        id="alertaVibratorio"><label class="form-check-label" for="alertaVibratorio">Notificações
+                        vibratórias no celular</label></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalCognitiva" tabindex="-1" aria-labelledby="modalCognitivaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalCognitivaLabel">Acessibilidade Intelectual / Cognitiva</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/submit-final" method="post">
+            <div class="row g-4">
+              <div class="col-lg-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-ui-checks-grid"></i> Organização de Tarefas</h5>
+                    <p>Qual formato de instrução funciona melhor para você?</p>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="instrucao" id="instrucaoEscrita">
+                      <label class="form-check-label" for="instrucaoEscrita">Instruções detalhadas por escrito</label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="instrucao" id="instrucaoVisual">
+                      <label class="form-check-label" for="instrucaoVisual">Com apoio visual (Kanban, checklists)
+                        <a href="#" class="badge bg-info text-decoration-none" tabindex="0" data-bs-toggle="popover"
+                          data-bs-trigger="focus" data-bs-title="O que é Kanban?"
+                          data-bs-content="É uma metodologia visual para gerenciar tarefas usando colunas como 'A Fazer', 'Em Progresso' e 'Concluído'. Ajuda a organizar o fluxo de trabalho de forma clara e eficiente.">?</a>
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="instrucao" id="instrucaoVerbal">
+                      <label class="form-check-label" for="instrucaoVerbal">Conversas de alinhamento rápidas</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-earbuds"></i> Ambiente de Trabalho Sensorial</h5>
+                    <label for="ambienteRange" class="form-label">Seu ambiente de trabalho ideal seria:</label>
+                    <div class="d-flex justify-content-between mb-2">
+                      <span>Silencioso <i class="bi bi-volume-mute"></i></span>
+                      <span><i class="bi bi-volume-up"></i> Agitado</span>
+                    </div>
+                    <input type="range" class="form-range" min="1" max="5" id="ambienteRange">
+                    <div class="form-check form-switch mt-3">
+                      <input class="form-check-input" type="checkbox" role="switch" id="fonesSwitch">
+                      <label class="form-check-label" for="fonesSwitch">A permissão para uso de fones com cancelamento
+                        de ruído seria útil</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="card mt-4">
+                  <div class="card-body">
+                    <h5 class="card-title"><i class="bi bi-person-check"></i> Suporte e Rotina</h5>
+                    <p>Quais dos seguintes suportes facilitariam sua rotina? (selecione quantos precisar)</p>
+                    <select class="form-select" multiple aria-label="Suportes de rotina">
+                      <option value="horario_flexivel">Horários de trabalho flexíveis</option>
+                      <option value="pausas_programadas">Possibilidade de pausas sensoriais</option>
+                      <option value="mentoria">Um mentor ou "colega de apoio"</option>
+                      <option value="software_organizacao">Licença para softwares de organização e foco</option>
+                    </select>
+                    <small class="form-text text-muted">Segure Ctrl (ou Cmd) para selecionar mais de um.</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+  </script>
+
+</body>
+
+</html>
