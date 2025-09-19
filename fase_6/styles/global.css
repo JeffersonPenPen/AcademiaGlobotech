@@ -1,0 +1,569 @@
+@import url(./normalize.css);
+@import url(./reset.css);
+
+html, body {
+    overflow-x: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: linear-gradient(to right, #00A7FF, #017CFF, #2A54FF, #8723FF, #B900FE);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 540px;
+    margin: 80px auto;
+    background-color: #F5F7FA;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+h1,
+h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+p,
+label {
+    color: #333;
+}
+
+form input,
+form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+form button {
+    background-color: #6245e6;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #3d17e7;
+}
+
+.link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.link a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+.botao-voltar,
+.botao-cadastro {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #6245e6;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.botao-voltar,
+.botao-cadastro:hover {
+    background-color: #3d17e7;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 25px auto;
+    height: 60px;
+    width: auto;
+    /* width: 80%;*/
+    /* max-width: 350px;*/
+}
+
+.links-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px 0;
+}
+
+.image-link {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.image-link:hover {
+    transform: scale(1.1);
+}
+
+.image-link img {
+    display: block;
+    max-height: 50px;
+    width: auto;
+    height: auto;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.card-header .bi {
+    margin-right: 0.5rem;
+    color: #6245e6;
+}
+
+.container-small {
+    max-width: 450px;
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+/* --- Dados Pessoais --- */
+
+.form-container {
+    background-color: #ffffff;
+    padding: 2.5rem;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+legend {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0 10px;
+    color: #6245e6;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 1.5rem;
+}
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: #6245e6;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #3d17e7;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+.form-actions {
+    text-align: right;
+    margin-top: 2rem;
+}
+
+.submit-button.small-button {
+    width: auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="url"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #6245e6;
+    box-shadow: 0 0 0 3px rgba(98, 69, 230, 0.2);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.radio-group,
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.radio-group label,
+.checkbox-group label {
+    margin-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"],
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+    margin-bottom: 0;
+}
+
+.btn.btn-primary {
+    background-color: #6245e6;
+    outline: none;
+    border: none;
+}
+
+.btn.btn-primary:hover {
+    background-color: #3d17e7;
+}
+.btn.btn-save {
+    background-color: #8723FF;
+    outline: none;
+    border: none;
+}
+
+.btn.btn-save:hover {
+    background-color: #731DD8;
+}
+
+.titulo-centralizado {
+    text-align: center;
+}
+
+.todo-row,
+.etapa-row {
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    align-items: center;
+    box-shadow: 0 0 6px #0001;
+}
+
+.todo-row .handle {
+    cursor: move;
+    color: #888;
+    font-size: 1.3em;
+}
+
+.etapas-area {
+    background: #f5f7fa;
+    border-radius: 6px;
+    margin-top: 8px;
+    padding: 10px 10px 8px 30px;
+}
+
+.progress {
+    height: 1.2rem;
+}
+
+.btn.etapa-ctrl,
+.btn.todo-ctrl {
+    min-width: 28px;
+    text-align: center;
+    padding: 3px 0;
+}
+
+.todo-actions .btn:not(:last-child) {
+    margin-right: 4px;
+}
+
+/* =================================================================== */
+/* BLOCO DE ESTILOS ESPECÍFICO PARA A PÁGINA DE CADASTRO (cadastro.html) */
+/* =================================================================== */
+
+/* --- ESTILOS DOS LINKS COM IMAGEM (AJUSTE DE ESPAÇAMENTO) --- */
+.links-container-flex {
+    display: flex;
+    justify-content: center;
+    /* Garante que o grupo de links fique centralizado na página */
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 7rem;
+    /* Define o espaço entre cada link. Pode ajustar este valor se quiser. */
+    padding: 20px 0;
+}
+
+.link-box {
+    /* A remoção da propriedade 'flex: 1' impede que as caixas se estiquem */
+    text-align: center;
+}
+
+.image-link img {
+    display: block;
+    margin: 0 auto;
+    height: 35px;
+    /* Define altura fixa para todas as imagens */
+    width: auto;
+}
+
+/* --- ESTILOS DA LISTA DE TAREFAS --- */
+/* Diminui o espaçamento geral da área de etapas */
+/* Aumenta o recuo e clareia o fundo da área de etapas para melhorar a hierarquia */
+.etapas-area {
+    padding: 10px 15px 12px 40px;
+    /* Aumentado o recuo esquerdo para 40px */
+    margin-top: 4px;
+    background-color: #f8f9fa;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Diminui o título "Etapas" */
+.etapas-area h6 {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #495057;
+    margin-bottom: 10px;
+}
+
+/* Deixa a linha de cada etapa mais compacta */
+.etapa-row {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
+/* Diminui a altura e a fonte da barra de progresso da etapa */
+.etapa-row .progress {
+    height: 12px;
+}
+
+.etapa-row .progress-bar {
+    font-size: 0.65rem;
+}
+
+/* Garante que os campos e botões no formulário 'Adicionar Etapa' sejam pequenos */
+.etapas-area .form-control-sm,
+.etapas-area .btn {
+    /* Afeta TODOS os botões dentro da área de etapas */
+    font-size: 0.8rem;
+    height: 30px;
+    padding: .25rem .5rem;
+}
+
+/* Garante que os botões de ação (editar/excluir) da etapa fiquem quadrados e consistentes */
+.etapa-row .etapa-ctrl {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+}
+
+/* --- REGRAS ESPECÍFICAS PARA O FORMULÁRIO DE CADASTRO --- */
+
+/* Força a mesma altura nos campos de input e select DENTRO do formulário com ID 'todo-form' */
+#todo-form .form-control-sm,
+#todo-form .form-select-sm {
+    height: 32px !important;
+}
+
+/* Altera a largura APENAS do botão de submit DENTRO do formulário com ID 'todo-form' */
+#todo-form button[type="submit"] {
+    width: auto;
+    /* Sobrescreve a regra global 'width: 100%' */
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+#todo-form h5 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Diminui as etiquetas (labels) dos campos do formulário */
+#todo-form .form-label {
+    font-size: 0.8rem;
+}
+
+.logo {
+    height: 120px;
+    /* Aumenta a altura do logo */
+}
+
+
+.container p {
+    font-size: 1.3rem;
+    /* Tamanho de fonte padrão para parágrafos */
+    line-height: 1.6;
+    /* Melhora a legibilidade */
+}
+
+.bloco-texto-intro {
+    text-align: left;
+    color: #333;
+}
+
+.progress-bar-custom {
+    background-color: rgb(0, 166, 255) !important;
+}
+
+/* --- ESTILOS PARA O POPUP DE AJUDA --- */
+.help-container {
+    position: relative;
+    display: inline-block;
+}
+
+.popup-manual {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 300px;
+    /* Aumentado para melhor visualização */
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 12px 16px;
+    z-index: 10;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.85rem;
+    text-align: left;
+    /* REGRAS MODIFICADAS PARA CENTRALIZAR O POPUP */
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#help-icon {
+    cursor: pointer;
+}
+
+.btn-report {
+    background-color: rgb(0, 166, 255);
+    color: white;
+    width: auto;
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+}
+
+.btn-report:hover {
+    background-color: rgb(0, 132, 204);
+    color: white;
+}
+/* Estilo para preenchimento de sliders (Leitura Labial) */
+input[type=range].slider-filled {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  background: #dee2e6; /* Cor de fundo padrão da trilha */
+  border-radius: 5px;
+  outline: none;
+}
+
+/* Estilo do "polegar" (a bolinha) para Chrome/Safari/Edge */
+input[type=range].slider-filled::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #0d6efd; /* Azul padrão do Bootstrap */
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Estilo do "polegar" (a bolinha) para Firefox */
+input[type=range].slider-filled::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #0d6efd;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.btn-save {
+    background-color: #8723FF;
+    border-color: #8723FF;
+}
+
+.btn-save:hover {
+    background-color: #731DD8; /* Tom mais escuro para o efeito hover */
+    border-color: #731DD8;
+}

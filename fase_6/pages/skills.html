@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Habilidades e Interesses</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../styles/skills.styles.css">
+</head>
+<body>
+  <main class="container my-5">
+    <img src="../assets/skills.png" alt="Skills" class="logo mb-4">
+      <p class="lead">Valorizamos e incentivamos a criativade de todos os nossos profissionais - e esse espaço é seu. Queremos conhecer melhor suas habilidades, seus interesses e projetos pessoais.</p>
+      <br><br>
+    <div class="card mb-4">
+      <div class="card-header"><i class="bi bi-code-slash"></i> Habilidades Técnicas</div>
+      <div class="card-body">
+        <p>Crie categorias para organizar suas habilidades (ex: Frontend, Backend) ou para listar tecnologias que você pretende estudar.</p>
+        <div class="form-row-rigid mb-4">
+          <div class="form-group flex-grow-1">
+            <label for="newListName" class="form-label"><b>Nome da Nova Categoria de Habilidades</b></label>
+            <input type="text" id="newListName" class="form-control" placeholder="Ex: Linguagens de Programação, Ferramentas DevOps...">
+          </div>
+          <div class="form-group button-group">
+            <button id="addListBtn" type="button" class="btn btn-primary">Criar Categoria</button>
+          </div>
+        </div>
+        <div id="skill-lists-container"></div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><i class="bi bi-person-heart"></i> Soft Skills</div>
+      <div class="card-body">
+        <p>Adicione suas principais habilidades comportamentais e uma breve descrição de como você as aplica.</p>
+        <div class="table-responsive"><table class="table" id="softSkillsTable"><thead><tr><th>Habilidade</th><th>Descrição</th><th style="width: 15%;">Ações</th></tr></thead><tbody></tbody></table></div>
+        <form id="softSkillsForm" class="form-row-rigid">
+            <div class="form-group fixed-width-md">
+                <label for="softSkillNome" class="form-label">Nome da Habilidade</label>
+                <input type="text" id="softSkillNome" class="form-control" placeholder="Ex: Organização">
+            </div>
+            <div class="form-group flex-grow-1">
+                <label for="softSkillDesc" class="form-label">Descrição</label>
+                <input type="text" id="softSkillDesc" class="form-control" placeholder="Ex: Capaz de gerenciar tarefas e prioridades de forma eficiente.">
+            </div>
+            <div class="form-group button-group">
+                <button type="submit" class="btn btn-primary">Adicionar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+    <div class="row g-4 mb-4">
+      <div class="col-lg-5">
+        <div class="card h-100">
+          <div class="card-header"><i class="bi bi-translate"></i> Idiomas</div>
+          <div class="card-body">
+            <label for="idiomasSelect" class="form-label">Selecione os idiomas que você domina:</label>
+            <select class="form-select" multiple id="idiomasSelect">
+              <option>Português</option>
+              <option>Inglês</option>
+              <option>Espanhol</option>
+              <option>Alemão</option>
+            </select>
+            <small class="form-text text-muted">Segure Ctrl (ou Cmd) para selecionar mais de um.</small>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-7">
+        <div class="card h-100">
+          <div class="card-header"><i class="bi bi-joystick"></i> Hobbies</div>
+          <div class="card-body">
+            <label for="hobbiesTextarea" class="form-label">Conte-nos sobre seus hobbies e interesses:</label>
+            <textarea class="form-control" id="hobbiesTextarea" rows="4" placeholder="O que você gosta de fazer no seu tempo livre?"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mb-4">
+      <div class="card-header"><i class="bi bi-journal-check"></i> Projetos Pessoais</div>
+      <div class="card-body">
+        <div class="table-responsive"><table class="table" id="todoTable"><thead><tr><th>Projeto</th><th>Descrição</th><th style="width: 20%;">Progresso</th><th style="width: 15%;">Ações</th></tr></thead><tbody></tbody></table></div>
+        <form id="todoForm" class="form-row-rigid">
+            <div class="form-group fixed-width-md">
+                <label for="projNome" class="form-label">Nome</label>
+                <input type="text" id="projNome" class="form-control">
+            </div>
+            <div class="form-group flex-grow-1">
+                <label for="projDesc" class="form-label">Descrição</label>
+                <input type="text" id="projDesc" class="form-control">
+            </div>
+            <div class="form-group fixed-width-sm">
+                <label for="projPerc" class="form-label">Progresso (%)</label>
+                <input type="number" id="projPerc" class="form-control" min="0" max="100">
+            </div>
+            <div class="form-group button-group">
+                <button type="submit" class="btn btn-primary">Adicionar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+    <div class="text-end d-flex justify-content-end gap-2">
+      <button type="button" id="salvar-btn" class="btn btn-primary">Salvar</button>
+      <button type="button" id="avancar-btn" class="btn btn-primary">Avançar</button>
+    </div>
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const storageKey = 'formData_skills';
+        const progressKey = 'progress_skills';
+
+        let pageState = {
+            habilidadesTecnicas: [],
+            softSkills: [],
+            idiomas: [],
+            hobbies: "",
+            projetos: []
+        };
+
+        function calculateProgress() {
+            let totalProgress = 0;
+            const categoriasValidas = pageState.habilidadesTecnicas.filter(list => list.skills.length > 0).length;
+            totalProgress += Math.min(3, categoriasValidas) * 20;
+            totalProgress += Math.min(2, pageState.softSkills.length) * 15;
+            if (pageState.idiomas.length > 0) {
+                totalProgress += 10;
+            }
+            return Math.min(100, Math.round(totalProgress));
+        }
+
+        function saveData() {
+            pageState.idiomas = Array.from(document.getElementById('idiomasSelect').selectedOptions).map(opt => opt.value);
+            pageState.hobbies = document.getElementById('hobbiesTextarea').value;
+            localStorage.setItem(storageKey, JSON.stringify(pageState));
+            localStorage.setItem(progressKey, calculateProgress());
+        }
+
+        const skillListsContainer = document.getElementById('skill-lists-container');
+        const newListNameInput = document.getElementById('newListName');
+        const addListBtn = document.getElementById('addListBtn');
+
+        const createSkillList = (listData) => {
+            const listCard = document.createElement('div');
+            listCard.className = 'card mb-3';
+            listCard.innerHTML = `<div class="card-header d-flex justify-content-between align-items-center"><h5 class="mb-0 list-title">${listData.listName}</h5><div><button type="button" class="btn btn-sm btn-danger delete-list"><i class="bi bi-trash-fill" style="color: white;"></i></button></div></div><div class="card-body"><ul class="list-group"></ul><form class="add-skill-form form-row-rigid form-row-sm"><div class="form-group flex-grow-1"><label class="form-label">Habilidade</label><input type="text" class="form-control form-control-sm" name="skillName" placeholder="Ex: JavaScript"></div><div class="form-group fixed-width-sm"><label class="form-label">Nível</label><select class="form-select form-select-sm" name="skillLevel"><option>Iniciante</option><option>Intermediário</option><option>Avançado</option></select></div><div class="form-group button-group"><button type="submit" class="btn btn-primary btn-sm">Adicionar</button></div></form></div>`;
+            const skillListUl = listCard.querySelector('.list-group');
+
+            const renderSkillItem = (skill) => {
+                const skillItem = document.createElement('li');
+                skillItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                skillItem.innerHTML = `<div><span class="fw-bold">${skill.name}</span>: <span class="badge text-bg-primary">${skill.level}</span></div><div><button type="button" class="btn btn-sm btn-primary me-1 edit-skill"><i class="bi bi-pencil-fill" style="color: white;"></i></button><button type="button" class="btn btn-sm btn-danger delete-skill"><i class="bi bi-trash-fill" style="color: white;"></i></button></div>`;
+                
+                skillItem.querySelector('.delete-skill').addEventListener('click', () => {
+                    listData.skills = listData.skills.filter(s => s !== skill);
+                    skillItem.remove();
+                    saveData();
+                });
+                skillItem.querySelector('.edit-skill').addEventListener('click', () => {
+                    listCard.querySelector('input[name="skillName"]').value = skill.name;
+                    listCard.querySelector('select[name="skillLevel"]').value = skill.level;
+                    listData.skills = listData.skills.filter(s => s !== skill);
+                    skillItem.remove();
+                    saveData();
+                });
+                skillListUl.appendChild(skillItem);
+            };
+
+            const addSkillForm = listCard.querySelector('.add-skill-form');
+            addSkillForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const skillNameInput = addSkillForm.querySelector('input[name="skillName"]');
+                const skillLevelSelect = addSkillForm.querySelector('select[name="skillLevel"]');
+                const newSkillName = skillNameInput.value.trim();
+                if (!newSkillName) return;
+
+                const newSkill = { name: newSkillName, level: skillLevelSelect.value };
+                listData.skills.push(newSkill);
+                renderSkillItem(newSkill);
+                addSkillForm.reset();
+                saveData();
+            });
+
+            listCard.querySelector('.delete-list').addEventListener('click', () => {
+                pageState.habilidadesTecnicas = pageState.habilidadesTecnicas.filter(l => l.id !== listData.id);
+                listCard.remove();
+                saveData();
+            });
+            
+            listData.skills.forEach(renderSkillItem);
+            skillListsContainer.appendChild(listCard);
+        };
+
+        addListBtn.addEventListener('click', () => {
+            const listName = newListNameInput.value.trim();
+            if (listName) {
+                const newList = { id: `list-${Date.now()}`, listName: listName, skills: [] };
+                pageState.habilidadesTecnicas.push(newList);
+                createSkillList(newList);
+                newListNameInput.value = '';
+                saveData();
+            }
+        });
+
+        const setupDynamicTable = (formId, tableId, columnConfigs, stateArray) => {
+            const form = document.getElementById(formId);
+            const tableBody = document.querySelector(`#${tableId} tbody`);
+            form.addEventListener('submit', e => { e.preventDefault(); const inputs = columnConfigs.map(config => document.getElementById(config.inputId)); if (inputs.some(input => !input.value.trim())) return; const newRowData = {}; inputs.forEach((input, i) => newRowData[columnConfigs[i].key] = input.value); stateArray.push(newRowData); form.reset(); renderTable(); saveData(); });
+            const renderTable = () => {
+                tableBody.innerHTML = '';
+                stateArray.forEach((rowData, index) => {
+                    const row = tableBody.insertRow();
+                    let cellsHTML = '';
+                    columnConfigs.forEach(config => {
+                        const value = rowData[config.key] || '0';
+                        if (config.isProgressBar) { cellsHTML += `<td><div class="progress"><div class="progress-bar" style="width:${value}%">${value}%</div></div></td>`; }
+                        else { cellsHTML += `<td>${value}</td>`; }
+                    });
+                    row.innerHTML = cellsHTML + `<td><button type="button" class="btn btn-sm btn-primary me-1 editar"><i class="bi bi-pencil-fill" style="color: white;"></i></button><button type="button" class="btn btn-sm btn-danger excluir"><i class="bi bi-trash-fill" style="color: white;"></i></button></td>`;
+                    row.querySelector('.excluir').addEventListener('click', () => { stateArray.splice(index, 1); renderTable(); saveData(); });
+                    row.querySelector('.editar').addEventListener('click', () => { columnConfigs.forEach(config => { document.getElementById(config.inputId).value = rowData[config.key]; }); stateArray.splice(index, 1); renderTable(); saveData(); });
+                });
+            };
+            return renderTable;
+        };
+        const renderSoftSkills = setupDynamicTable('softSkillsForm', 'softSkillsTable', [{ inputId: 'softSkillNome', key: 'habilidade' }, { inputId: 'softSkillDesc', key: 'descricao' }], pageState.softSkills);
+        const renderProjetos = setupDynamicTable('todoForm', 'todoTable', [{ inputId: 'projNome', key: 'projeto' }, { inputId: 'projDesc', key: 'descricao' }, { inputId: 'projPerc', key: 'progresso', isProgressBar: true }], pageState.projetos);
+
+        function loadData() {
+            const savedState = JSON.parse(localStorage.getItem(storageKey));
+            if (savedState) {
+                pageState.habilidadesTecnicas.splice(0, pageState.habilidadesTecnicas.length, ...(savedState.habilidadesTecnicas || []));
+                pageState.softSkills.splice(0, pageState.softSkills.length, ...(savedState.softSkills || []));
+                pageState.projetos.splice(0, pageState.projetos.length, ...(savedState.projetos || []));
+                pageState.idiomas = savedState.idiomas || [];
+                pageState.hobbies = savedState.hobbies || "";
+
+                skillListsContainer.innerHTML = '';
+                pageState.habilidadesTecnicas.forEach(list => createSkillList(list));
+
+                renderSoftSkills();
+                renderProjetos();
+                
+                const idiomasSelect = document.getElementById('idiomasSelect');
+                Array.from(idiomasSelect.options).forEach(option => {
+                    option.selected = pageState.idiomas.includes(option.value);
+                });
+                document.getElementById('hobbiesTextarea').value = pageState.hobbies;
+            }
+        }
+
+        document.getElementById('salvar-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            saveData();
+            alert('Habilidades salvas!');
+            window.location.href = 'cadastro.html';
+        });
+
+        document.getElementById('avancar-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            saveData();
+            alert('Habilidades salvas! Próximo passo: Acessibilidade.');
+            window.location.href = 'acessibilidade.html';
+        });
+
+        document.body.addEventListener('input', saveData);
+        loadData();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../styles/global.css">
+    <title>Cadastro de Funcionário</title>
+    <style>
+        /* Estilos para controlar a impressão do relatório */
+        @media print {
+            /* Esconde tudo na página por padrão */
+            body * {
+                visibility: hidden;
+            }
+            /* Mostra apenas a área de impressão e seu conteúdo */
+            #print-area, #print-area * {
+                visibility: visible;
+            }
+            /* Garante que a área de impressão ocupe toda a página */
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <img class="logo" src="../assets/logo_form.png" alt="Tá na Globo 5.0">
+        <h1>Entre, a casa é sua!</h1>
+        <div class="bloco-texto-intro">
+            <p>Nós sabemos que não foi fácil. Foram meses de muita dedicação, mergulho em conhecimento, novos desafios a cada dia e disciplina, mas valeu a pena! Você conseguiu.</p><br>
+            <p>Agora, para finalizar seu cadastro de funcionário e tornar seu processo o mais confortável possível, criamos um guia de integração para facilitar seu processo. Aqui está um To-Do para você preparar seu checklist de documentação. Além disso, gostaríamos que acessasse os links abaixo e preenchesse seus <b>dados pessoais</b>, suas informações sobre <b>acessibilidade</b> e nos contasse um pouco mais sobre suas <b>habilidades e interesses</b>.</p>
+        </div>
+        <p class="titulo-centralizado fw-bold">Estamos muito felizes de tê-lo conosco.</p>
+        <div class="card my-5" id="tarefas-integracao-card">
+            <div class="card-header d-flex align-items-center">
+                <div><i class="bi bi-check2-square"></i> Minhas Tarefas de Integração</div>
+                <div class="help-container ms-2">
+                    <i class="bi bi-question-circle" id="help-icon" title="Manual de Instruções"></i>
+                    <div id="help-popup" class="popup-manual">
+                        <h6>Manual de Instruções</h6>
+                        <p class="mb-1 small">Use esta área para organizar suas pendências:</p>
+                        <ul class="list-unstyled mb-0 small">
+                            <li><i class="bi bi-plus-circle"></i> <strong>Adicionar:</strong> Preencha os campos e clique em "Adicionar".</li>
+                            <li><i class="bi bi-arrows-move"></i> <strong>Reordenar:</strong> Clique e arraste o ícone <i class="bi bi-list"></i>.</li>
+                            <li><i class="bi bi-pencil-square"></i> <strong>Editar:</strong> Use o botão <i class="bi bi-pencil-fill"></i> para alterar uma tarefa.</li>
+                            <li><i class="bi bi-trash"></i> <strong>Excluir:</strong> Remova tarefas com o botão <i class="bi bi-trash-fill"></i>.</li>
+                            <li><i class="bi bi-card-checklist"></i> <strong>Etapas:</strong> Adicione sub-tarefas clicando no ícone de checklist.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form class="p-3 mb-4 bg-light border rounded" id="todo-form">
+                    <h5 class="mb-3">Adicionar Nova Tarefa</h5>
+                    <div class="row gx-3">
+                        <div class="col-12 col-md-6 col-lg-3"><label for="todo-nome" class="form-label fw-bold">Nome</label><input type="text" class="form-control form-control-sm" id="todo-nome" placeholder="Ex: Entregar Documentos" required></div>
+                        <div class="col-12 col-md-6 col-lg-4"><label for="todo-desc" class="form-label fw-bold">Descrição</label><input type="text" class="form-control form-control-sm" id="todo-desc" placeholder="Ex: Cópia do RG e CPF"></div>
+                        <div class="col-12 col-md-6 col-lg-3"><label for="todo-area" class="form-label fw-bold">Área</label><select class="form-select form-select-sm" id="todo-area"><option value="">Selecione</option><option>Documentação</option><option>Médica</option><option>Acadêmica</option></select></div>
+                        <div class="col-12 col-md-6 col-lg-2"><label for="todo-prog" class="form-label fw-bold">Progresso (%)</label><input type="number" min="0" max="100" step="10" id="todo-prog" class="form-control form-control-sm" value="0"></div>
+                    </div>
+                    <div class="row mt-3"><div class="col-12 text-end d-flex justify-content-end gap-2">
+                        <button type="button" id="imprimir-relatorio-btn" class="btn btn-report btn-sm d-none">Imprimir Relatório</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Adicionar</button>
+                    </div></div>
+                </form>
+                <div id="todo-list"></div>
+            </div>
+        </div>
+        <div class="links-container-flex">
+            <div class="link-box" id="link-pessoais"><a href="pessoais.html" class="image-link"><img src="../assets/dados_pessoais.png" alt="Dados Pessoais"></a><div class="progress mt-2" role="progressbar" style="height: 8px;"><div class="progress-bar progress-bar-custom" id="progress-pessoais" style="width: 0%"></div></div></div>
+            <div class="link-box" id="link-skills"><a href="skills.html" class="image-link"><img src="../assets/skills.png" alt="Skills"></a><div class="progress mt-2" role="progressbar" style="height: 8px;"><div class="progress-bar progress-bar-custom" id="progress-skills" style="width: 0%"></div></div></div>
+            <div class="link-box" id="link-acessibilidade"><a href="acessibilidade.html" class="image-link"><img src="../assets/acessibilidade.png" alt="Acessibilidade"></a><div class="progress mt-2" role="progressbar" style="height: 8px;"><div class="progress-bar progress-bar-custom" id="progress-acessibilidade" style="width: 0%"></div></div></div>
+        </div>
+    </main>
+    
+    <div id="print-area"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let todos = JSON.parse(localStorage.getItem('todos_cad')) || [];
+            const todoListContainer = document.getElementById('todo-list');
+            const todoForm = document.getElementById('todo-form');
+            const helpIcon = document.getElementById('help-icon');
+            const helpPopup = document.getElementById('help-popup');
+
+            // Funcionalidade do popup de ajuda
+            helpIcon.addEventListener('click', (event) => {
+                event.stopPropagation();
+                helpPopup.style.display = helpPopup.style.display === 'block' ? 'none' : 'block';
+            });
+
+            // Fecha o popup se clicar fora dele
+            window.addEventListener('click', () => {
+                if (helpPopup.style.display === 'block') {
+                    helpPopup.style.display = 'none';
+                }
+            });
+
+            function renderTodos() {
+                todoListContainer.innerHTML = '';
+                if (!Array.isArray(todos)) return;
+                todos.forEach((todo, idx) => {
+                    const todoRow = document.createElement('div');
+                    todoRow.className = 'todo-row row gy-2 gx-2 align-items-center';
+                    todoRow.dataset.id = idx;
+                    const addEtapaFormDisplay = todo.addEtapaFormVisivel ? 'block' : 'none';
+                    const etapasAreaDisplay = todo.etapasVisiveis ? 'block' : 'none';
+                    todoRow.innerHTML = `
+                        <div class="col-auto"><span class="handle" style="cursor: move;"><i class="bi bi-list"></i></span></div>
+                        <div class="col-md-2"><b>${todo.nome}</b></div><div class="col-md-3">${todo.desc || ''}</div>
+                        <div class="col-md-2"><span class="badge text-bg-light border">${todo.area || ''}</span></div>
+                        <div class="col-md-3"><div class="progress" role="progressbar" style="height: 20px;"><div class="progress-bar ${getBarClass(todo.prog)}" style="width: ${todo.prog}%">${todo.prog}%</div></div></div>
+                        <div class="col-md-auto todo-actions text-end">
+                            <button class="btn btn-sm btn-primary todo-ctrl" type="button" title="Editar Tarefa" onclick="loadToEdit(${idx})"><i class="bi bi-pencil-fill"></i></button>
+                            <button class="btn btn-sm btn-danger todo-ctrl" type="button" title="Excluir Tarefa" onclick="removerTodo(${idx})"><i class="bi bi-trash-fill"></i></button>
+                            <button class="btn btn-sm btn-secondary todo-ctrl" type="button" title="Ver/Adicionar Etapas" onclick="toggleEtapas(${idx})"><i class="bi bi-card-checklist"></i></button>
+                        </div>
+                        <div class="col-12 etapas-area" id="etapas-${idx}" style="display: ${etapasAreaDisplay};">
+                            <h6><i class="bi bi-diagram-3"></i> Etapas</h6>
+                            <div id="etapa-list-${idx}">${(todo.etapas || []).map((e, ei) => etapaHtml(idx, ei, e)).join('')}</div>
+                            <div id="add-etapa-form-container-${idx}" style="display: ${addEtapaFormDisplay};">
+                                <div class="d-flex justify-content-end align-items-end mt-2 g-2">
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control form-control-sm" id="etapa-nome-${idx}" placeholder="Nome da nova etapa">
+                                    </div>
+                                    <div style="width: 80px;">
+                                        <input type="number" min="0" max="100" id="etapa-prog-${idx}" class="form-control form-control-sm" placeholder="%">
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="addEtapa(${idx})"><i class="bi bi-plus"></i> Adicionar Etapa</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    todoListContainer.appendChild(todoRow);
+                });
+            }
+
+        function etapaHtml(todoIndex, etapaIndex, etapa) {
+                return `
+                <div class="etapa-row d-flex align-items-center g-2">
+                    <div class="me-auto">${etapa.nome}</div>
+                    <div class="col-3 me-2">
+                        <div class="progress" style="height: 1rem;"><div class="progress-bar ${getBarClass(etapa.prog)}" style="width: ${etapa.prog}%">${etapa.prog}%</div></div>
+                    </div>
+                    <div class="col-auto">
+                        <button class="btn btn-primary btn-sm etapa-ctrl me-1" onclick="editEtapa(${todoIndex}, ${etapaIndex})"><i class="bi bi-pencil-fill"></i></button>
+                        <button class="btn btn-danger btn-sm etapa-ctrl" onclick="removerEtapa(${todoIndex}, ${etapaIndex})"><i class="bi bi-trash-fill"></i></button>
+                    </div>
+                </div>`;
+            }
+
+            todoForm.addEventListener('submit', (e) => { e.preventDefault(); const n = document.getElementById('todo-nome'); if (!n.value.trim()) return; todos.push({ nome: n.value.trim(), desc: document.getElementById('todo-desc').value.trim(), area: document.getElementById('todo-area').value, prog: parseInt(document.getElementById('todo-prog').value) || 0, etapas: [], etapasVisiveis: false, addEtapaFormVisivel: true }); todoForm.reset(); document.getElementById('todo-prog').value = '0'; n.focus(); saveAndRerender(); });
+            window.loadToEdit = (idx) => { const i = todos[idx]; todoForm.querySelector('#todo-nome').value = i.nome; todoForm.querySelector('#todo-desc').value = i.desc; todoForm.querySelector('#todo-area').value = i.area; todoForm.querySelector('#todo-prog').value = i.prog; removerTodo(idx, false); };
+            window.removerTodo = (idx, r = true) => { todos.splice(idx, 1); if (r) saveAndRerender(); };
+            window.toggleEtapas = (idx) => { todos[idx].etapasVisiveis = !todos[idx].etapasVisiveis; if (todos[idx].etapasVisiveis) { todos[idx].addEtapaFormVisivel = true; } renderTodos(); };
+            window.addEtapa = (idx) => { const n = document.getElementById(`etapa-nome-${idx}`); if (!n.value.trim()) return; const p = document.getElementById(`etapa-prog-${idx}`); todos[idx].etapas = todos[idx].etapas || []; todos[idx].etapas.push({ nome: n.value.trim(), prog: parseInt(p.value) || 0 }); todos[idx].addEtapaFormVisivel = false; saveAndRerender(); };
+            window.removerEtapa = (idx, eIdx) => { todos[idx].etapas.splice(eIdx, 1); saveAndRerender(); };
+            window.editEtapa = (idx, eIdx) => { const e = todos[idx].etapas[eIdx]; document.getElementById(`etapa-nome-${idx}`).value = e.nome; document.getElementById(`etapa-prog-${idx}`).value = e.prog; removerEtapa(idx, eIdx); };
+            function getBarClass(prog) { return "progress-bar-custom"; }
+            function saveAndRerender() { localStorage.setItem('todos_cad', JSON.stringify(todos)); renderTodos(); }
+            new Sortable(todoListContainer, { handle: '.handle', animation: 150, onEnd: (evt) => { const [movedItem] = todos.splice(evt.oldIndex, 1); todos.splice(evt.newIndex, 0, movedItem); saveAndRerender(); } });
+            
+            // --- NOVAS FUNCIONALIDADES ---
+
+            function updateGlobalProgress() {
+                const progressMapping = {
+                    'progress-pessoais': { key: 'progress_pessoais', containerId: 'link-pessoais' },
+                    'progress-skills': { key: 'progress_skills', containerId: 'link-skills' },
+                    'progress-acessibilidade': { key: 'progress_acessibilidade', containerId: 'link-acessibilidade' }
+                };
+                
+                let progressValues = {};
+
+                for (const [elementId, data] of Object.entries(progressMapping)) {
+                    const progressBar = document.getElementById(elementId);
+                    const progressContainer = document.getElementById(data.containerId);
+                    const value = parseInt(localStorage.getItem(data.key)) || 0;
+                    
+                    progressValues[data.key] = value;
+
+                    if (progressBar) {
+                        progressBar.style.width = `${value}%`;
+                        progressBar.setAttribute('aria-valuenow', value);
+                    }
+                    if (progressContainer) {
+                        // 1. Adiciona o tooltip com o percentual no hover
+                        progressContainer.setAttribute('data-bs-toggle', 'tooltip');
+                        progressContainer.setAttribute('data-bs-title', `${value}% preenchido`);
+                    }
+                }
+
+                // 2. Controla a visibilidade do botão de imprimir
+                const printBtn = document.getElementById('imprimir-relatorio-btn');
+                if (progressValues.progress_pessoais >= 100 && 
+                    progressValues.progress_skills >= 100 && 
+                    progressValues.progress_acessibilidade >= 100) {
+                    printBtn.classList.remove('d-none');
+                } else {
+                    printBtn.classList.add('d-none');
+                }
+            }
+            
+            function buildReportHtml() {
+                // Coleta de dados do localStorage
+                const tarefas = JSON.parse(localStorage.getItem('todos_cad')) || [];
+                const pessoais = JSON.parse(localStorage.getItem('formData_pessoais')) || {};
+                const skills = JSON.parse(localStorage.getItem('formData_skills')) || {};
+                const acessibilidade = JSON.parse(localStorage.getItem('formData_acessibilidade')) || {};
+
+                // Construção do HTML do relatório
+                let html = `<img src="../assets/logo_form.png" style="display: block; margin: 0 auto; width: 50%;">`;
+
+                // Seção Tarefas
+                html += `<br><h2>Minhas Tarefas de Integração</h2>`;
+                if(tarefas.length > 0) {
+                    html += `<table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse;"><thead><tr><th>Nome</th><th>Descrição</th><th>Área</th><th>Progresso</th></tr></thead><tbody>`;
+                    tarefas.forEach(t => {
+                        html += `<tr><td>${t.nome || ''}</td><td>${t.desc || ''}</td><td>${t.area || ''}</td><td>${t.prog || 0}%</td></tr>`;
+                        // Adiciona as etapas da tarefa, se existirem.
+                        if (t.etapas && t.etapas.length > 0) {
+                            html += `<tr><td colspan="4" style="padding-left: 30px; background-color: #f9f9f9;">`;
+                            html += `<small><strong>Etapas:</strong></small><ul>`;
+                            t.etapas.forEach(etapa => {
+                                html += `<li>${etapa.nome} (${etapa.prog}%)</li>`;
+                            });
+                            html += `</ul></td></tr>`;
+                        }
+                    });
+                    html += `</tbody></table>`;
+                } else { html += `<p>Nenhuma tarefa adicionada.</p>`; }
+
+                // Seção Dados Pessoais
+                html += `<br><br><img src="../assets/dados_pessoais.png" width="50%"><br>`;
+                html += `<p><strong>Nome:</strong> ${pessoais.nome || ''}</p>`;
+                html += `<p><strong>Nome Social:</strong> ${pessoais.nome_social || 'Não informado'}</p>`;
+                html += `<p><strong>Pronomes:</strong> ${pessoais.pronomes || ''}</p>`;
+                html += `<p><strong>Email:</strong> ${pessoais.email || ''}</p>`;
+                html += `<p><strong>Telefone:</strong> ${pessoais.telefone || ''}</p>`;
+                html += `<p><strong>Endereço:</strong> ${pessoais.logradouro || ''}, ${pessoais.numero || ''} - ${pessoais.bairro || ''}, ${pessoais.cidade || ''}/${pessoais.estado || ''}</p>`;
+
+                // Seção Skills
+                html += `<br><br><img src="../assets/skills.png" width="20%"><br>`;
+                // Adiciona o bloco de Habilidades Técnicas
+                if (skills.habilidadesTecnicas && skills.habilidadesTecnicas.length > 0) {
+                    html += `<h3>Habilidades Técnicas</h3>`;
+                    // Loop para cada categoria de habilidade (ex: Frontend, Backend)
+                    skills.habilidadesTecnicas.forEach(categoria => {
+                        // Verifica se a categoria tem habilidades antes de exibi-la
+                        if (categoria.skills && categoria.skills.length > 0) {
+                            html += `<p><strong>${categoria.listName}:</strong></p><ul>`;
+                            // Loop para cada skill dentro da categoria
+                            categoria.skills.forEach(s => {
+                                html += `<li>${s.name} (${s.level})</li>`;
+                            });
+                            html += `</ul>`;
+                        }
+                    });
+                }
+                if(skills.softSkills && skills.softSkills.length > 0) {
+                    html += `<h3>Soft Skills</h3><ul>`;
+                    skills.softSkills.forEach(s => { html += `<li><strong>${s.habilidade}:</strong> ${s.descricao}</li>`; });
+                    html += `</ul>`;
+                }
+                if(skills.idiomas && skills.idiomas.length > 0) {
+                    html += `<h3>Idiomas</h3><p>${skills.idiomas.join(', ')}</p>`;
+                }
+                if(skills.hobbies) {
+                    html += `<br><h3>Hobbies</h3><p>${skills.hobbies}</p>`;
+                }
+
+                // Seção Acessibilidade
+                html += `<br><br><img src="../assets/acessibilidade.png" width="50%"><br>`;
+                    const accessibilityMap = {
+                    'Física / Motora': {
+                        'vagaPcd': 'Vaga de estacionamento reservada e próxima',
+                        'rampas': 'Acesso por rampas e/ou elevadores',
+                        'portasLargas': 'Portas e corredores com largura acessível',
+                        'banheiroAcessivel': 'Banheiros adaptados com barras de apoio',
+                        'mesaTrabalho': (val) => `Tipo de mesa ideal: ${val}`,
+                        'cadeiraErgo': 'Cadeira Ergonômica (NR-17)',
+                        'apoioBraco': 'Cadeira com apoios de braço ajustáveis',
+                        'tipoCadeira': (val) => `Utiliza cadeira de rodas do tipo: ${val}`,
+                        'espacoManobra': 'Necessita de espaço para manobra na mesa de trabalho',
+                        'pontoEnergia': 'Necessita de ponto de energia próximo para recarga'
+                    },
+                    'Visual': {
+                        'tec_assistiva': (val) => `Tecnologia assistiva principal: ${val}`,
+                        'softwareNome': (val) => `Software utilizado: ${val}`,
+                        'iluminacaoRange': (val) => `Nível de iluminação preferencial: ${val}/5`,
+                        'corFundo': (val) => `Cor de fundo preferida: <span style="display:inline-block; width:15px; height:15px; background-color:${val}; border:1px solid #ccc;"></span>`,
+                        'pisoTatil': 'Sinalização com piso tátil',
+                        'placasBraille': 'Sinalização com placas em Braille',
+                        'fontesGrandes': 'Sinalização com fontes ampliadas'
+                    },
+                    'Auditiva': {
+                        'libras_online': 'Intérprete de Libras em reuniões online',
+                        'legendas_online': 'Legendas ao vivo em reuniões online',
+                        'material_online': 'Material pós-reunião online',
+                        'libras_presencial': 'Intérprete de Libras em treinamentos presenciais',
+                        'legendas_presencial': 'Legendas ao vivo em treinamentos presenciais',
+                        'material_presencial': 'Material pós-treinamento presencial',
+                        'comunicacaoDiaria': (val) => `Comunicação preferencial no dia a dia: ${val}`,
+                        'alertaVisual': 'Necessita de alertas visuais (luzes) para emergências',
+                        'alertaVibratorio': 'Necessita de notificações vibratórias para emergências'
+                    },
+                    'Intelectual / Cognitiva': {
+                        'instrucao': (val) => `Formato de instrução preferencial: ${val}`,
+                        'ambienteRange': (val) => `Ambiente de trabalho ideal (1-Silencioso, 5-Agitado): ${val}/5`,
+                        'fonesSwitch': 'Permissão para uso de fones com cancelamento de ruído',
+                        'suporteRotina': (val) => `Suportes de rotina: ${val}`
+                    }
+                };
+                for (const categoria in accessibilityMap) {
+                    html += `<h3>${categoria}</h3>`;
+                    let itemsDaCategoria = [];
+
+                    // Verifica cada item da categoria nos dados salvos
+                    for (const key in accessibilityMap[categoria]) {
+                        const valor = acessibilidade[key];
+                        // Condição para considerar um valor como preenchido
+                        if (valor && valor !== 'Selecione uma opção...' && valor !== 'Escolha uma opção...' && valor !== '#FFFFFF') {
+                            const label = accessibilityMap[categoria][key];
+                            if (typeof label === 'function') {
+                                itemsDaCategoria.push(label(valor)); // Se for uma função, passa o valor para formatação
+                            } else {
+                                itemsDaCategoria.push(label); // Se for texto, usa diretamente
+                            }
+                        }
+                    }
+
+                    // Exibe os itens encontrados ou a mensagem padrão
+                    if (itemsDaCategoria.length > 0) {
+                        html += `<ul>`;
+                        itemsDaCategoria.forEach(item => { html += `<li>${item}</li>`; });
+                        html += `</ul>`;
+                    } else {
+                        html += `<p>Nenhuma necessidade especial informada.</p><br>`;
+                    }
+                }
+
+                return html;
+                }
+
+            function imprimirRelatorio() {
+                const reportHTML = buildReportHtml();
+                const features = 'width=800,height=650,scrollbars=yes,resizable=yes';
+                const printWindow = window.open('', 'Relatorio', features);
+                if (printWindow) {
+                    printWindow.document.write(reportHTML);
+                    printWindow.document.close();
+                    printWindow.focus();
+                    // Um pequeno atraso para garantir que o conteúdo seja renderizado antes de imprimir
+                    setTimeout(() => {
+                        printWindow.print();
+                        printWindow.close();
+                    }, 250);
+                } else {
+                    alert('Por favor, habilite pop-ups para imprimir o relatório.');
+                }
+            }
+
+            // Adiciona o evento de clique ao botão
+            document.getElementById('imprimir-relatorio-btn').addEventListener('click', imprimirRelatorio);
+
+            // --- INICIALIZAÇÃO ---
+            
+            // Inicia as funcionalidades
+            updateGlobalProgress();
+            renderTodos();
+
+            // Ativa os tooltips do Bootstrap
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        });
+    </script>
+</body>
+</html>

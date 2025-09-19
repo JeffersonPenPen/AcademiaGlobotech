@@ -1,0 +1,45 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 40px;
+  line-height: 1.6;
+  background: #fff;
+  color: #222;
+}
+
+.relatorio-container {
+  max-width: 800px;
+  margin: auto;
+}
+
+.logo-relatorio {
+  display: block;
+  margin: 0 auto 40px auto;
+  max-height: 100px;
+}
+
+.section-title {
+  display: block;
+  margin: 60px auto 20px auto;
+  max-height: 60px;
+}
+
+h2 {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+p, li {
+  font-size: 14px;
+}
+
+ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}

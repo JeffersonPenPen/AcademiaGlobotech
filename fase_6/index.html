@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles/global.css">
+  <title>Lista de Aprovados</title>
+  <style>
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 60%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container container-small">
+    <img src="assets/Sem Título-1.png" alt="Globo">
+    <br>
+    <h1>Lista de Aprovados</h1>
+    <p>Preencha seus dados para continuar.</p>
+    <br>
+    <form onsubmit="event.preventDefault(); verificar();">
+      <input type="text" id="nome" placeholder="Primeiro Nome" required>
+      <input type="text" id="id" placeholder="ID" required>
+      <button type="submit">Verificar</button>
+    </form>
+
+<script>
+function verificar() {
+    const nome = document.getElementById('nome').value.toLowerCase();
+    const id = document.getElementById('id').value;
+    fetch('assets/convocados.json')
+        .then(response => response.json())
+        .then(dados => {
+            const chave = nome + '|' + id;
+            if (dados[chave] === 1) {
+                window.location.href = 'pages/aprovado.html';
+            } else if (dados[chave] === 0) {
+                window.location.href = 'pages/reprovado.html';
+            } else {
+                window.location.href = 'pages/erro.html';
+            }
+        });
+}
+</script>
+
+</body>
+</html>

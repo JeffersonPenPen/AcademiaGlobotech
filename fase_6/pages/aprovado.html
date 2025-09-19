@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/global.css">
+  <title>Aprovado</title>
+  <style>
+
+img {
+  display: block;  
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  height: auto;
+}
+</style>
+</head>
+<body>
+  <main class="container container-small">
+    <img src="../assets/globo-tv-logo.png" alt="Globo">
+    <br>
+    <h2>Parabéns, você foi aprovado!</h2>
+    
+    <p>Entre com os dados de sua Conta Globo.</p>
+
+    <br>
+    <form onsubmit="event.preventDefault(); loginGlobo();">
+      <input type="email" id="email" placeholder="E-mail" required>
+      <input type="password" id="senha" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+      <div id="erro" class="erro"></div>
+    </form>
+    
+
+    <div class="link">
+        <a href="index.html">Já tem conta? Faça login</a>
+    </div>
+  </main>
+<script>
+function loginGlobo() {
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const senha = document.getElementById('senha').value;
+  fetch('../assets/conta_globo.json')
+    .then(r => r.json())
+    .then(usuarios => {
+      const usuarioValido = usuarios.find(user => user.email === email && user.senha === senha);
+      if(usuarioValido) {
+        window.location.href = 'cadastro.html';
+      } else {
+        document.getElementById('erro').innerText = "Credenciais inválidas!";
+      }
+    });
+}
+</script>
+
+</body>
+</html>

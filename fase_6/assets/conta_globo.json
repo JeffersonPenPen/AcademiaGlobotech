@@ -1,0 +1,15 @@
+[
+  { "email": "jefferson@globo.com", "senha": "senha123" },
+  { "email": "rafael@globo.com", "senha": "senha123" },
+  { "email": "ren@globo.com", "senha": "senha123" },
+  { "email": "joao@globo.com", "senha": "senha123" },
+  { "email": "beatriz@globo.com", "senha": "senha123" },
+  { "email": "bernarndo@globo.com", "senha": "senha123" },
+  { "email": "warley@globo.com", "senha": "senha123" },
+  { "email": "iane@globo.com", "senha": "senha123" },
+  { "email": "guest@globo.com", "senha": "senha123" },
+  { "email": "priscilla@globo.com", "senha": "senha123" },
+  { "email": "dannyel@globo.com", "senha": "senha123" },
+  { "email": "maria@globo.com", "senha": "senha123" },
+  { "email": "nando@globo.com", "senha": "senha123" }
+]
