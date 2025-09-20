@@ -11,15 +11,12 @@
     <style>
         /* Estilos para controlar a impressão do relatório */
         @media print {
-            /* Esconde tudo na página por padrão */
             body * {
                 visibility: hidden;
             }
-            /* Mostra apenas a área de impressão e seu conteúdo */
             #print-area, #print-area * {
                 visibility: visible;
             }
-            /* Garante que a área de impressão ocupe toda a página */
             #print-area {
                 position: absolute;
                 left: 0;
@@ -171,8 +168,6 @@
             function saveAndRerender() { localStorage.setItem('todos_cad', JSON.stringify(todos)); renderTodos(); }
             new Sortable(todoListContainer, { handle: '.handle', animation: 150, onEnd: (evt) => { const [movedItem] = todos.splice(evt.oldIndex, 1); todos.splice(evt.newIndex, 0, movedItem); saveAndRerender(); } });
             
-            // --- NOVAS FUNCIONALIDADES ---
-
             function updateGlobalProgress() {
                 const progressMapping = {
                     'progress-pessoais': { key: 'progress_pessoais', containerId: 'link-pessoais' },
@@ -194,13 +189,13 @@
                         progressBar.setAttribute('aria-valuenow', value);
                     }
                     if (progressContainer) {
-                        // 1. Adiciona o tooltip com o percentual no hover
+
                         progressContainer.setAttribute('data-bs-toggle', 'tooltip');
                         progressContainer.setAttribute('data-bs-title', `${value}% preenchido`);
                     }
                 }
 
-                // 2. Controla a visibilidade do botão de imprimir
+                // Controla a visibilidade do botão de imprimir
                 const printBtn = document.getElementById('imprimir-relatorio-btn');
                 if (progressValues.progress_pessoais >= 100 && 
                     progressValues.progress_skills >= 100 && 
@@ -221,13 +216,12 @@
                 // Construção do HTML do relatório
                 let html = `<img src="../assets/logo_form.png" style="display: block; margin: 0 auto; width: 50%;">`;
 
-                // Seção Tarefas
                 html += `<br><h2>Minhas Tarefas de Integração</h2>`;
                 if(tarefas.length > 0) {
                     html += `<table border="1" cellpadding="5" cellspacing="0" style="width:100%; border-collapse: collapse;"><thead><tr><th>Nome</th><th>Descrição</th><th>Área</th><th>Progresso</th></tr></thead><tbody>`;
                     tarefas.forEach(t => {
                         html += `<tr><td>${t.nome || ''}</td><td>${t.desc || ''}</td><td>${t.area || ''}</td><td>${t.prog || 0}%</td></tr>`;
-                        // Adiciona as etapas da tarefa, se existirem.
+
                         if (t.etapas && t.etapas.length > 0) {
                             html += `<tr><td colspan="4" style="padding-left: 30px; background-color: #f9f9f9;">`;
                             html += `<small><strong>Etapas:</strong></small><ul>`;
@@ -251,15 +245,11 @@
 
                 // Seção Skills
                 html += `<br><br><img src="../assets/skills.png" width="20%"><br>`;
-                // Adiciona o bloco de Habilidades Técnicas
                 if (skills.habilidadesTecnicas && skills.habilidadesTecnicas.length > 0) {
                     html += `<h3>Habilidades Técnicas</h3>`;
-                    // Loop para cada categoria de habilidade (ex: Frontend, Backend)
                     skills.habilidadesTecnicas.forEach(categoria => {
-                        // Verifica se a categoria tem habilidades antes de exibi-la
                         if (categoria.skills && categoria.skills.length > 0) {
                             html += `<p><strong>${categoria.listName}:</strong></p><ul>`;
-                            // Loop para cada skill dentro da categoria
                             categoria.skills.forEach(s => {
                                 html += `<li>${s.name} (${s.level})</li>`;
                             });
@@ -328,18 +318,16 @@
                     // Verifica cada item da categoria nos dados salvos
                     for (const key in accessibilityMap[categoria]) {
                         const valor = acessibilidade[key];
-                        // Condição para considerar um valor como preenchido
                         if (valor && valor !== 'Selecione uma opção...' && valor !== 'Escolha uma opção...' && valor !== '#FFFFFF') {
                             const label = accessibilityMap[categoria][key];
                             if (typeof label === 'function') {
-                                itemsDaCategoria.push(label(valor)); // Se for uma função, passa o valor para formatação
+                                itemsDaCategoria.push(label(valor));
                             } else {
-                                itemsDaCategoria.push(label); // Se for texto, usa diretamente
+                                itemsDaCategoria.push(label);
                             }
                         }
                     }
 
-                    // Exibe os itens encontrados ou a mensagem padrão
                     if (itemsDaCategoria.length > 0) {
                         html += `<ul>`;
                         itemsDaCategoria.forEach(item => { html += `<li>${item}</li>`; });
@@ -360,7 +348,6 @@
                     printWindow.document.write(reportHTML);
                     printWindow.document.close();
                     printWindow.focus();
-                    // Um pequeno atraso para garantir que o conteúdo seja renderizado antes de imprimir
                     setTimeout(() => {
                         printWindow.print();
                         printWindow.close();
@@ -370,19 +357,16 @@
                 }
             }
 
-            // Adiciona o evento de clique ao botão
             document.getElementById('imprimir-relatorio-btn').addEventListener('click', imprimirRelatorio);
-
-            // --- INICIALIZAÇÃO ---
             
             // Inicia as funcionalidades
             updateGlobalProgress();
             renderTodos();
 
-            // Ativa os tooltips do Bootstrap
             const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
             const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
         });
     </script>
 </body>
+
 </html>
