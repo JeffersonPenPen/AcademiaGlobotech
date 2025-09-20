@@ -358,24 +358,19 @@ textarea {
     margin-right: 4px;
 }
 
-/* =================================================================== */
-/* BLOCO DE ESTILOS ESPECÍFICO PARA A PÁGINA DE CADASTRO (cadastro.html) */
-/* =================================================================== */
 
-/* --- ESTILOS DOS LINKS COM IMAGEM (AJUSTE DE ESPAÇAMENTO) --- */
+/* Estilo para cadastro.html */
+
 .links-container-flex {
     display: flex;
     justify-content: center;
-    /* Garante que o grupo de links fique centralizado na página */
     align-items: center;
     flex-wrap: nowrap;
     gap: 7rem;
-    /* Define o espaço entre cada link. Pode ajustar este valor se quiser. */
     padding: 20px 0;
 }
 
 .link-box {
-    /* A remoção da propriedade 'flex: 1' impede que as caixas se estiquem */
     text-align: center;
 }
 
@@ -383,22 +378,17 @@ textarea {
     display: block;
     margin: 0 auto;
     height: 35px;
-    /* Define altura fixa para todas as imagens */
     width: auto;
 }
 
-/* --- ESTILOS DA LISTA DE TAREFAS --- */
-/* Diminui o espaçamento geral da área de etapas */
-/* Aumenta o recuo e clareia o fundo da área de etapas para melhorar a hierarquia */
+/* Estilo Lista Tarefas */
 .etapas-area {
     padding: 10px 15px 12px 40px;
-    /* Aumentado o recuo esquerdo para 40px */
     margin-top: 4px;
     background-color: #f8f9fa;
     border-top: 1px solid #dee2e6;
 }
 
-/* Diminui o título "Etapas" */
 .etapas-area h6 {
     font-size: 0.9rem;
     font-weight: bold;
@@ -421,34 +411,28 @@ textarea {
     font-size: 0.65rem;
 }
 
-/* Garante que os campos e botões no formulário 'Adicionar Etapa' sejam pequenos */
+
 .etapas-area .form-control-sm,
 .etapas-area .btn {
-    /* Afeta TODOS os botões dentro da área de etapas */
     font-size: 0.8rem;
     height: 30px;
     padding: .25rem .5rem;
 }
 
-/* Garante que os botões de ação (editar/excluir) da etapa fiquem quadrados e consistentes */
 .etapa-row .etapa-ctrl {
     width: 30px;
     height: 30px;
     padding: 0;
 }
 
-/* --- REGRAS ESPECÍFICAS PARA O FORMULÁRIO DE CADASTRO --- */
-
-/* Força a mesma altura nos campos de input e select DENTRO do formulário com ID 'todo-form' */
 #todo-form .form-control-sm,
 #todo-form .form-select-sm {
     height: 32px !important;
 }
 
-/* Altera a largura APENAS do botão de submit DENTRO do formulário com ID 'todo-form' */
+
 #todo-form button[type="submit"] {
     width: auto;
-    /* Sobrescreve a regra global 'width: 100%' */
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
@@ -458,22 +442,18 @@ textarea {
     font-weight: 600;
 }
 
-/* Diminui as etiquetas (labels) dos campos do formulário */
 #todo-form .form-label {
     font-size: 0.8rem;
 }
 
 .logo {
     height: 120px;
-    /* Aumenta a altura do logo */
 }
 
 
 .container p {
     font-size: 1.3rem;
-    /* Tamanho de fonte padrão para parágrafos */
     line-height: 1.6;
-    /* Melhora a legibilidade */
 }
 
 .bloco-texto-intro {
@@ -485,7 +465,7 @@ textarea {
     background-color: rgb(0, 166, 255) !important;
 }
 
-/* --- ESTILOS PARA O POPUP DE AJUDA --- */
+/* Estilo Pop-Up Ajuda */
 .help-container {
     position: relative;
     display: inline-block;
@@ -496,7 +476,6 @@ textarea {
     position: absolute;
     background-color: #f9f9f9;
     min-width: 300px;
-    /* Aumentado para melhor visualização */
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     padding: 12px 16px;
     z-index: 10;
@@ -504,7 +483,7 @@ textarea {
     border-radius: 5px;
     font-size: 0.85rem;
     text-align: left;
-    /* REGRAS MODIFICADAS PARA CENTRALIZAR O POPUP */
+    
     top: 120%;
     left: 50%;
     transform: translateX(-50%);
@@ -532,7 +511,7 @@ input[type=range].slider-filled {
   appearance: none;
   width: 100%;
   height: 8px;
-  background: #dee2e6; /* Cor de fundo padrão da trilha */
+  background: #dee2e6;
   border-radius: 5px;
   outline: none;
 }
@@ -564,6 +543,7 @@ input[type=range].slider-filled::-moz-range-thumb {
 }
 
 .btn-save:hover {
-    background-color: #731DD8; /* Tom mais escuro para o efeito hover */
+    background-color: #731DD8;
     border-color: #731DD8;
+
 }
