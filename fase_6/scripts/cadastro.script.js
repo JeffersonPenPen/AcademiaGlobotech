@@ -1,7 +1,7 @@
-// Aguarda o conteúdo da página carregar completamente
+
 window.addEventListener('DOMContentLoaded', () => {
     
-    // Tenta carregar as tarefas do localStorage ou usa uma tarefa de exemplo
+
     let todos = JSON.parse(localStorage.getItem('todos_cad')) || [
         {
             nome: "Entregar Laudo PCD",
@@ -25,9 +25,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const todoListContainer = document.getElementById('todo-list');
 
-    // Função principal que desenha a lista de tarefas na tela
     function renderTodos() {
-        todoListContainer.innerHTML = ''; // Limpa a lista atual
+        todoListContainer.innerHTML = '';
         todos.forEach((todo, idx) => {
             const todoRow = document.createElement('div');
             todoRow.className = 'todo-row row gy-2 gx-2 align-items-center';
@@ -110,7 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('todo-desc').value = item.desc;
         document.getElementById('todo-area').value = item.area;
         document.getElementById('todo-prog').value = item.prog;
-        removerTodo(idx, false); // Remove sem re-renderizar
+        removerTodo(idx, false);
     }
 
     // Remove uma tarefa principal
@@ -148,7 +147,7 @@ window.addEventListener('DOMContentLoaded', () => {
         nomeInput.value = '';
         progInput.value = '';
         saveAndRerender();
-        document.getElementById(`etapas-${idx}`).style.display = 'block'; // Mantém aberto
+        document.getElementById(`etapas-${idx}`).style.display = 'block';
     }
     
     // Remove uma etapa
@@ -173,18 +172,18 @@ window.addEventListener('DOMContentLoaded', () => {
         return "bg-danger";
     }
 
-    // Salva no localStorage e re-renderiza a lista
+    // Salva no localStorage
     function saveAndRerender() {
         localStorage.setItem('todos_cad', JSON.stringify(todos));
         renderTodos();
     }
 
-    // Inicializa a funcionalidade de "arrastar e soltar"
+    // Função "arrastar e soltar"
     new Sortable(todoListContainer, {
-        handle: '.handle', // Define o ícone como a "alça" para arrastar
+        handle: '.handle',
         animation: 150,
         onEnd: function (evt) {
-            // Reordena o array 'todos' com base na nova posição do item
+            
             const [movedItem] = todos.splice(evt.oldIndex, 1);
             todos.splice(evt.newIndex, 0, movedItem);
             
@@ -193,6 +192,6 @@ window.addEventListener('DOMContentLoaded', () => {
         },
     });
 
-    // Renderização inicial
     renderTodos();
+
 });
