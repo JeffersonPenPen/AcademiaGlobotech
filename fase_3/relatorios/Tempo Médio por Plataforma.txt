@@ -1,0 +1,17 @@
+TÁ NA GLOBO: Tempo Médio por Plataforma
+
+->-> RELATÓRIO 6: Tempo Médio de Consumo por Plataforma <-<-
+
+TV Globo: 3656 segundos ou 1:00:56
+Globoplay: 3385 segundos ou 0:56:25
+G1: 2482 segundos ou 0:41:22
+Premiere: 7200 segundos ou 2:00:00
+GE Globo: 2427 segundos ou 0:40:27
+Spotify: 2237 segundos ou 0:37:16
+Receitas Gshow: 625 segundos ou 0:10:25
+Sportv Play: 7007 segundos ou 1:56:47
+Canal Brasil: 1780 segundos ou 0:29:40
+Viva: 2730 segundos ou 0:45:30
+Multishow: 0 segundos ou 0:00:00
+GNT Play: 7180 segundos ou 1:59:40
+App Cartola: 0 segundos ou 0:00:00

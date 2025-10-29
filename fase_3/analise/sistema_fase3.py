@@ -111,51 +111,63 @@ class SistemaAnaliseEngajamento:
     #->-> RELATÓRIOS <-<-
 
     def relatorio1_top_conteudos_por_consumo(self, top_n=10):
-        print("\n->-> RELATÓRIO 1: Top Conteúdos por Tempo de Consumo <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 1: Top Conteúdos por Tempo de Consumo <-<-\n"]
         todos = self._conteudos.percurso_em_ordem()
         ordenados = quick_sort(todos, lambda c: c.calcular_total_consumo())
         for i, conteudo in enumerate(ordenados[:top_n], 1):
             tempo = conteudo.calcular_total_consumo()
-            print(f"{i}. {conteudo.nome} - {tempo:.0f} segundos ou {converter_segundos(tempo)}")
+            linha = f"{i}. {conteudo.nome} - {tempo:.0f} segundos ou {converter_segundos(tempo)}"
+            linhas.append(linha)
+        return "\n".join(linhas)
 
     def relatorio2_usuarios_mais_engajados(self, top_n=10):
-        print("\n->-> RELATÓRIO 2: Usuários com Maior Tempo de Consumo <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 2: Usuários com Maior Tempo de Consumo <-<-\n"]
         todos = self._usuarios.percurso_em_ordem()
         ordenados = quick_sort(todos, lambda u: u.tempo_total_consumo())
         for i, usuario in enumerate(ordenados[:top_n], 1):
-            print(f"{i}. {usuario.id_usuario} - {usuario.tempo_total_consumo():.0f} segundos ou {converter_segundos(usuario.tempo_total_consumo())}")
+            linha = f"{i}. {usuario.id_usuario} - {usuario.tempo_total_consumo():.0f} segundos ou {converter_segundos(usuario.tempo_total_consumo())}"
+            linhas.append(linha)
+        return "\n".join(linhas)
 
     def relatorio3_engajamento_por_plataforma(self):
-        print("\n->-> RELATÓRIO 3: Engajamento por Plataforma <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 3: Engajamento por Plataforma <-<-\n"]
         plataformas_lista = list(self._plataformas.values())
         ordenadas = quick_sort(plataformas_lista, lambda p: p.total_interacoes())
         for plataforma in ordenadas:
-            print(f"{plataforma.nome}: {plataforma.total_interacoes()} interações")
+            linha = f"{plataforma.nome}: {plataforma.total_interacoes()} interações"
+            linhas.append(linha)
+        return "\n".join(linhas)
 
     def relatorio4_conteudos_mais_comentados(self, top_n=10):
-        print("\n->-> RELATÓRIO 4: Conteúdos Mais Comentados <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 4: Conteúdos Mais Comentados <-<-\n"]
         todos = self._conteudos.percurso_em_ordem()
         ordenados = quick_sort(todos, lambda c: c.contar_comentarios())
         for i, conteudo in enumerate(ordenados[:top_n], 1):
-            print(f"{i}. {conteudo.nome} - {conteudo.contar_comentarios()} comentários")
-
+            linha = f"{i}. {conteudo.nome} - {conteudo.contar_comentarios()} comentários"
+            linhas.append(linha)
+        return "\n".join(linhas)
+    
     def relatorio5_total_interacoes_por_tipo(self):
-        print("\n->-> RELATÓRIO 5: Total de Interações por Tipo <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 5: Total de Interações por Tipo <-<-\n"]
         contagem = {}
         for plataforma in self._plataformas.values():
             for i in plataforma.interacoes:
                 contagem[i.tipo] = contagem.get(i.tipo, 0) + 1
         for tipo, total in contagem.items():
-            print(f"{tipo}: {total} interações")
+            linha = f"{tipo}: {total} interações"
+            linhas.append(linha)
+        return "\n".join(linhas)
 
     def relatorio6_tempo_medio_por_plataforma(self):
-        print("\n->-> RELATÓRIO 6: Tempo Médio de Consumo por Plataforma <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 6: Tempo Médio de Consumo por Plataforma <-<-\n"]
         for nome, plataforma in self._plataformas.items():
             media = plataforma.tempo_medio_consumo()
-            print(f"{nome}: {media:.0f} segundos ou {converter_segundos(media)}")
-
+            linha = f"{nome}: {media:.0f} segundos ou {converter_segundos(media)}"
+            linhas.append(linha)
+        return "\n".join(linhas)
+    
     def relatorio7_comentarios_por_conteudo(self):
-        print("\n->-> RELATÓRIO 7: Comentários por Conteúdo <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 7: Comentários por Conteúdo <-<-\n"]
         todos = self._conteudos.percurso_em_ordem()
         for conteudo in todos:
             comentarios = [
@@ -165,15 +177,17 @@ class SistemaAnaliseEngajamento:
             if comentarios:
                 qtd = len(comentarios)
                 sufixo = "comentário" if qtd == 1 else "comentários"
-                print(f"{conteudo.nome} ({qtd} {sufixo}):")
+                titulo_conteudo = f"\n{conteudo.nome} ({qtd} {sufixo}):"
+                linhas.append(titulo_conteudo)
                 for c in comentarios:
-                    print(f"- {c}")
-                print()  #Linha em branco por estética
+                    linhas.append(f"       - {c}")
+        return "\n".join(linhas) #Linha em branco por estética
 
     def relatorio8_conteudos_mais_interagidos(self, top_n=10):
-        print("\n->-> RELATÓRIO 8: Conteúdos com Mais Interações <-<-\n")
+        linhas = ["\n->-> RELATÓRIO 8: Conteúdos com Mais Interações <-<-\n"]
         todos = self._conteudos.percurso_em_ordem()
         ordenados = quick_sort(todos, lambda c: c.total_interacoes())
         for i, conteudo in enumerate(ordenados[:top_n], 1):
-            print(f"{i}. {conteudo.nome} - {conteudo.total_interacoes()} interações")
-
+            linha = f"{i}. {conteudo.nome} - {conteudo.total_interacoes()} interações"
+            linhas.append(linha)
+        return "\n".join(linhas)

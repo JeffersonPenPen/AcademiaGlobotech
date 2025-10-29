@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: linear-gradient(to right, #00A7FF, #017CFF, #2A54FF, #8723FF, #B900FE);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 540px;
+    margin: 80px auto;
+    background-color: #F5F7FA;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+@media (min-width: 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
+p,
+label {
+    color: #333;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto 25px auto;
+    height: 120px;
+    width: auto;
+}
+
+.container p {
+    font-size: 1.3rem;
+    line-height: 1.6;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #343a40;
+}
+
+.card-header .bi {
+    margin-right: 0.5rem;
+    color: #6245e6;
+}
+
+.btn.btn-primary {
+    background-color: #6245e6;
+    outline: none;
+    border: none;
+}
+
+.btn.btn-primary:hover {
+    background-color: #3d17e7;
+}
+
+.btn.btn-save {
+    background-color: #8723FF;
+    outline: none;
+    border: none;
+}
+
+.btn.btn-save:hover {
+    background-color: #731DD8;
+}
+
+.progress {
+    height: 1.2rem;
+}
+
+.form-row-rigid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    padding: 1rem 0.75rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: .375rem;
+    width: 100%;
+}
+
+.form-row-rigid .form-group {
+    margin-bottom: 0;
+}
+
+.form-row-rigid .form-group.flex-grow-1 {
+    flex: 1 1 auto;
+    min-width: 150px;
+}
+
+.form-row-rigid .form-group.button-group {
+    flex: 0 1 auto;
+}
+
+.form-row-rigid .form-group.fixed-width-sm {
+    width: 105px;
+    flex: 0 0 105px;
+}
+
+.form-row-rigid .form-group.fixed-width-md {
+    width: 200px;
+}
+
+.form-row-rigid .form-control,
+.form-row-rigid .form-select,
+.form-row-rigid .btn {
+    box-sizing: border-box !important;
+    height: 38px !important;
+    width: 100%;
+}
+
+.form-row-rigid.form-row-sm .form-control,
+.form-row-rigid.form-row-sm .form-select,
+.form-row-rigid.form-row-sm .btn {
+    height: 31px !important;
+}
+
+.form-row-rigid .form-group.button-group .btn {
+    width: auto;
+}
+
+#softSkillsForm .form-group.fixed-width-md {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 180px;
+}
+
+
+#todoForm .form-group.fixed-width-md {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 180px;
+}

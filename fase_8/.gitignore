@@ -1,0 +1,27 @@
+# Credenciais e chaves
+*.pem
+*.key
+holotasker-key.pem
+cloudformation/parameters.json
+
+# Arquivos temporários
+*.log
+*.tmp
+.DS_Store
+
+# Node modules
+node_modules/
+
+# AWS
+.aws/
+aws-exports.js
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Backup
+*.bak
+backup-*/

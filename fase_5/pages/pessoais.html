@@ -123,4 +123,129 @@
     </form>
   </main>
 </body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dados Pessoais</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles/global.css">
+</head>
+<body>
+  <main class="container form-container">
+    <div class="form-header">
+      <img src="../assets/dados_pessoais.png" alt="Dados Pessoais" class="logo">
+      </div>
+
+    <form action="/submit-data" method="post">
+      <fieldset>
+        <legend>Identificação</legend>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="nome">Nome completo</label>
+                <input type="text" id="nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="nome_social">Nome social (opcional)</label>
+                <input type="text" id="nome_social" name="nome_social">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Pronomes</label>
+            <div class="radio-group">
+                <label><input type="radio" name="pronomes" value="ele/dele"> Ele/Dele</label>
+                <label><input type="radio" name="pronomes" value="ela/dela"> Ela/Dela</label>
+                <label><input type="radio" name="pronomes" value="elu/delu"> Elu/Delu</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="data_nascimento">Data de nascimento</label>
+            <input type="date" id="data_nascimento" name="data_nascimento">
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Contato</legend>
+        <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX">
+        </div>
+        <div class="form-group">
+            <label for="linkedin">LinkedIn</label>
+            <input type="url" id="linkedin" name="linkedin" placeholder="https://linkedin.com/in/seu-usuario">
+        </div>
+        <div class="form-group">
+            <label for="github">GitHub</label>
+            <input type="url" id="github" name="github" placeholder="https://github.com/seu-usuario">
+        </div>
+      </fieldset>
+      
+      <fieldset>
+        <legend>Endereço</legend>
+        <div class="form-group">
+            <label for="logradouro">Logradouro</label>
+            <input type="text" id="logradouro" name="logradouro" placeholder="Ex: Av. Paulista">
+        </div>
+        <div class="form-row">
+            <div class="form-group" style="flex-basis: 25%; min-width: 80px;">
+                <label for="numero">Número</label>
+                <input type="text" id="numero" name="numero">
+            </div>
+            <div class="form-group" style="flex-basis: 35%; min-width: 120px;">
+                <label for="apt">Apt. / Complemento</label>
+                <input type="text" id="apt" name="apt" placeholder="Opcional">
+            </div>
+            <div class="form-group" style="flex-basis: 30%; min-width: 150px;">
+                <label for="bairro">Bairro</label>
+                <input type="text" id="bairro" name="bairro">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" name="cidade">
+            </div>
+            <div class="form-group" style="flex-basis: 30%; min-width: 100px;">
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado">
+                  <option value="">-- UF --</option>
+                  <optgroup label="Sudeste">
+                    <option value="SP">São Paulo</option>
+                    <option value="RJ">Rio de Janeiro</option>
+                    <option value="MG">Minas Gerais</option>
+                  </optgroup>
+                  <optgroup label="Sul">
+                    <option value="RS">Rio Grande do Sul</option>
+                    <option value="PR">Paraná</option>
+                    <option value="SC">Santa Catarina</option>
+                  </optgroup>
+                  </select>
+            </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Contato de Emergência</legend>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="contato_emergencia_nome">Nome do contato</label>
+                <input type="text" id="contato_emergencia_nome" name="contato_emergencia_nome">
+            </div>
+            <div class="form-group">
+                <label for="contato_emergencia_tel">Telefone do contato</label>
+                <input type="tel" id="contato_emergencia_tel" name="contato_emergencia_tel">
+            </div>
+        </div>
+      </fieldset>
+      
+	  <div class="form-actions">
+        <button type="submit" class="submit-button small-button">Avançar</button>
+      </div>
+    </form>
+  </main>
+</body>
 </html>
