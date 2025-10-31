@@ -25,3 +25,5 @@ aws-exports.js
 # Backup
 *.bak
 backup-*/
+
+fase_8 Extras/

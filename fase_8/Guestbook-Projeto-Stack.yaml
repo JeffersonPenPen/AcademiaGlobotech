@@ -1,0 +1,648 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  (PROJETO GUESTBOOK v4 - FREE TIER CORRETO) Infraestrutura completa
+  com EC2 (t4g.small), ASG, ALB, RDS (db.t3.micro) e EFS (PHP App).
+
+Parameters:
+  ProjectName:
+    Type: String
+    Default: HoloTaskerHub
+    Description: A name for the project to be used as a prefix for resources.
+
+  VpcCIDR:
+    Type: String
+    Default: 10.0.0.0/16
+    Description: The CIDR block for the VPC.
+
+  PublicSubnet1CIDR:
+    Type: String
+    Default: 10.0.1.0/24
+    Description: The CIDR block for the public subnet in the first Availability Zone.
+
+  PublicSubnet2CIDR:
+    Type: String
+    Default: 10.0.2.0/24
+    Description: The CIDR block for the public subnet in the second Availability Zone.
+
+  PrivateSubnet1CIDR:
+    Type: String
+    Default: 10.0.3.0/24
+    Description: The CIDR block for the private subnet in the first Availability Zone.
+
+  PrivateSubnet2CIDR:
+    Type: String
+    Default: 10.0.4.0/24
+    Description: The CIDR block for the private subnet in the second Availability Zone.
+
+  # --- MUDAN??A AQUI: Default para t4g.small (Free Tier ARM) ---
+  Ec2InstanceType:
+    Type: String
+    Default: t4g.small
+    Description: O tipo de inst??ncia EC2 (t4g.small ?? Free Tier ARM).
+
+  DbName:
+    Type: String
+    Default: holotaskerdb
+    Description: The name of the database to create in RDS.
+
+  DbUser:
+    Type: String
+    Default: holo_user
+    Description: The username for the RDS database.
+
+  DbPassword:
+    Type: String
+    NoEcho: true
+    Description: The password for the RDS database. Must be at least 8 characters.
+
+  MyIP:
+    Type: String
+    Description: Your public IP address for SSH access to the bastion host.
+    Default: 0.0.0.0/0 
+
+  KeyName:
+    Type: AWS::EC2::KeyPair::KeyName
+    Description: Name of an existing EC2 KeyPair to enable SSH access to the instances.
+
+  # --- MUDAN??A AQUI: AMI para ARM64 (Graviton) ---
+  LatestAmiId:
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2
+    Description: Latest Amazon Linux 2 AMI ID for ARM64 (t4g)
+
+Resources:
+  # VPC e Rede (Sem mudan??as)
+  VPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: !Ref VpcCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-VPC
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-IGW
+  VPCGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId: !Ref VPC
+      InternetGatewayId: !Ref InternetGateway
+  PublicSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet1CIDR
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-PublicSubnet-AZ1
+  PublicSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PublicSubnet2CIDR
+      AvailabilityZone: !Select [1, !GetAZs '']
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-PublicSubnet-AZ2
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PrivateSubnet1CIDR
+      AvailabilityZone: !Select [0, !GetAZs '']
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-PrivateSubnet-AZ1
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: !Ref PrivateSubnet2CIDR
+      AvailabilityZone: !Select [1, !GetAZs '']
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-PrivateSubnet-AZ2
+  PublicRouteTable:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-Public-RT
+  PublicRoute:
+    Type: AWS::EC2::Route
+    DependsOn: VPCGatewayAttachment
+    Properties:
+      RouteTableId: !Ref PublicRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId: !Ref InternetGateway
+  PublicSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      RouteTableId: !Ref PublicRouteTable
+  PublicSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      RouteTableId: !Ref PublicRouteTable
+  EIP1:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+  NatGateway1:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt EIP1.AllocationId
+      SubnetId: !Ref PublicSubnet1
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-NAT-GW-AZ1
+  PrivateRouteTable1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-Private-RT-AZ1
+  PrivateRoute1:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable1
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway1
+  PrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable1
+  EIP2:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+  NatGateway2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt EIP2.AllocationId
+      SubnetId: !Ref PublicSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-NAT-GW-AZ2
+  PrivateRouteTable2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-Private-RT-AZ2
+  PrivateRoute2:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable2
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NatGateway2
+  PrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref PrivateRouteTable2
+
+  # Security Groups (Porta 80 para App, sem mudan??as)
+  BastionSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow SSH from MyIP"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: !Ref MyIP
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-Bastion-SG
+  AlbSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow HTTP/HTTPS from anywhere"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-ALB-SG
+  AppSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow traffic from ALB and Bastion"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          SourceSecurityGroupId: !Ref AlbSecurityGroup
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          SourceSecurityGroupId: !Ref BastionSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-App-SG
+  RdsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow MySQL traffic from App instances"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          SourceSecurityGroupId: !Ref AppSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-RDS-SG
+  EfsSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: "Allow NFS traffic from App instances"
+      VpcId: !Ref VPC
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 2049
+          ToPort: 2049
+          SourceSecurityGroupId: !Ref AppSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-EFS-SG
+
+  # --- MUDAN??A AQUI: Bastion Host usa o par??metro (t4g.small) ---
+  BastionHost:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref LatestAmiId
+      InstanceType: !Ref Ec2InstanceType
+      KeyName: !Ref KeyName
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          SubnetId: !Ref PublicSubnet1
+          GroupSet:
+            - !Ref BastionSecurityGroup
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-Bastion
+
+  # ALB (Sem mudan??as, porta 80)
+  ApplicationLoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Sub ${ProjectName}-ALB
+      Subnets:
+        - !Ref PublicSubnet1
+        - !Ref PublicSubnet2
+      SecurityGroups:
+        - !Ref AlbSecurityGroup
+      Scheme: internet-facing
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-ALB
+  ALBTargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Name: !Sub ${ProjectName}-TG
+      VpcId: !Ref VPC
+      Port: 80
+      Protocol: HTTP
+      HealthCheckProtocol: HTTP
+      HealthCheckPath: /index.php 
+      HealthCheckIntervalSeconds: 30
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      Matcher:
+        HttpCode: 200
+      TargetType: instance
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-TG
+  ALBListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref ApplicationLoadBalancer
+      Port: 80
+      Protocol: HTTP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref ALBTargetGroup
+
+  # IAM (Sem mudan??as)
+  JwtSecret:
+    Type: AWS::SecretsManager::Secret
+    Properties:
+      Name: !Sub ${ProjectName}-JWT-Secret-Ignored
+      Description: JWT secret key (not used by PHP app)
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "jwt"}'
+        GenerateStringKey: "password"
+        PasswordLength: 64
+        ExcludeCharacters: '"@/\'
+  Ec2InstanceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ec2.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Policies:
+        - PolicyName: DummySecretsAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: 's3:ListBucket'
+                Resource: '*'
+  Ec2InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Roles:
+        - !Ref Ec2InstanceRole
+
+  # EC2 Launch Template (usa t4g.small) e ASG
+  AppLaunchTemplate:
+    Type: AWS::EC2::LaunchTemplate
+    Properties:
+      LaunchTemplateName: !Sub ${ProjectName}-Launch-Template
+      LaunchTemplateData:
+        # --- MUDAN??A AQUI: Usa o par??metro (t4g.small) ---
+        InstanceType: !Ref Ec2InstanceType
+        IamInstanceProfile:
+          Arn: !GetAtt Ec2InstanceProfile.Arn
+        SecurityGroupIds:
+          - !Ref AppSecurityGroup
+        ImageId: !Ref LatestAmiId
+        KeyName: !Ref KeyName
+        # UserData (sem mudan??as, PHP roda em ARM)
+        UserData:
+          Fn::Base64: !Sub |
+            #!/bin/bash -xe
+            # 1. Instala Apache, PHP 7.4, Git, e utilit??rios EFS
+            yum update -y
+            amazon-linux-extras install -y php7.4
+            yum install -y httpd git amazon-efs-utils
+            
+            # Instala helper do CloudFormation
+            yum install -y aws-cfn-bootstrap
+
+            # 2. Monta o EFS como a raiz do site (/var/www/html)
+            EFS_ID="${EfsFileSystem}"
+            EFS_DIR="/var/www/html"
+            mkdir -p $EFS_DIR
+            mount -t efs -o tls $EFS_ID:/ $EFS_DIR
+            
+            # 3. Cria a aplica????o (S?? RODA NA PRIMEIRA INST??NCIA)
+            if [ ! -f /var/www/html/index.php ]; then
+              
+              # Cria config.php com os dados do RDS
+              cat <<EOF > /var/www/html/config.php
+            <?php
+            define('DB_HOST', '${RDSInstance.Endpoint.Address}');
+            define('DB_USER', '${DbUser}');
+            define('DB_PASS', '${DbPassword}');
+            define('DB_NAME', '${DbName}');
+            \$conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+            if (\$conn->connect_error) { die("Connection failed: " . \$conn->connect_error); }
+            
+            // Cria a tabela no RDS na primeira execu????o
+            \$conn->query("CREATE TABLE IF NOT EXISTS guestbook (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(50),
+                message TEXT,
+                image_path VARCHAR(255),
+                reg_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )");
+            
+            // Cria a pasta de uploads DENTRO do EFS
+            mkdir -p /var/www/html/uploads;
+            chmod -R 777 /var/www/html/uploads;
+            ?>
+            EOF
+            
+              # Cria o index.php (o app em si)
+              cat <<EOF > /var/www/html/index.php
+            <!DOCTYPE html><html><head><title>AWS Demo (RDS+EFS)</title>
+            <style> 
+              body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 20px; } 
+              h2 { color: #333; }
+              .container { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+              form { border: 1px solid #ccc; padding: 20px; border-radius: 5px; background: #f9f9f9; } 
+              form input[type=text], form textarea { width: 95%; padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; }
+              form input[type=submit] { background-color: #007bff; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+              form input[type=submit]:hover { background-color: #0056b3; }
+              hr { margin: 20px 0; } 
+              .post { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px dotted #ccc; } 
+              .post p { margin: 0; }
+              .post strong { color: #0056b3; }
+              .post span { font-size: 0.9em; color: #777; }
+              .post img { max-width: 400px; display: block; margin-top: 10px; border-radius: 5px; } 
+            </style>
+            </head><body>
+            <div class="container">
+              <h2>Projeto Demo: Guestbook (RDS + EFS)</h2>
+              <p>Esta aplica????o salva as mensagens no <strong>RDS</strong> e as imagens no <strong>EFS</strong>.</p>
+              <form action="index.php" method="post" enctype="multipart/form-data">
+                  Nome: <input type="text" name="name" required><br>
+                  Mensagem: <textarea name="message" rows="4"></textarea><br>
+                  Imagem (Salva no EFS): <input type="file" name="imagefile"><br>
+                  <input type="submit" name="submit" value="Postar Mensagem">
+              </form><hr>
+            <?php
+            include 'config.php';
+            
+            // L??gica para salvar post
+            if (isset(\$_POST['submit'])) {
+                \$name = \$_POST['name'] ?? 'Anonimo';
+                \$message = \$_POST['message'] ?? '';
+                \$image_path = NULL;
+                
+                if (isset(\$_FILES['imagefile']) && \$_FILES['imagefile']['error'] == 0) {
+                    \$target_dir = "uploads/";
+                    \$target_file = \$target_dir . uniqid() . '_' . basename(\$_FILES["imagefile"]["name"]);
+                    if (move_uploaded_file(\$_FILES["imagefile"]["tmp_name"], \$target_file)) {
+                        \$image_path = \$target_file;
+                    }
+                }
+                
+                \$stmt = \$conn->prepare("INSERT INTO guestbook (name, message, image_path) VALUES (?, ?, ?)");
+                \$stmt->bind_param("sss", \$name, \$message, \$image_path);
+                \$stmt->execute();
+                echo "<p style='color:green;'>Mensagem postada com sucesso!</p>";
+            }
+            
+            // Mostra os dados do RDS
+            \$result = \$conn->query("SELECT name, message, image_path, reg_date FROM guestbook ORDER BY reg_date DESC");
+            while (\$row = \$result->fetch_assoc()) {
+                echo "<div class='post'>";
+                echo "<p><strong>" . htmlspecialchars(\$row['name']) . "</strong> <span>(" . \$row['reg_date'] . "):</span><br>" . nl2br(htmlspecialchars(\$row['message'])) . "</p>";
+                if (!empty(\$row['image_path'])) {
+                    echo "<img src='" . htmlspecialchars(\$row['image_path']) . "' alt='Uploaded Image'>";
+                }
+                echo "</div>";
+            }
+            \$conn->close();
+            ?>
+            </div></body></html>
+            EOF
+
+            fi # Fim do 'if' da primeira inst??ncia
+            
+            # 4. Ajusta permiss??es do EFS para o Apache
+            chown -R apache:apache /var/www/html
+            
+            # 5. Inicia o Apache
+            systemctl start httpd
+            systemctl enable httpd
+
+            # 6. Envia o sinal de sucesso
+            /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource AutoScalingGroup --region ${AWS::Region}
+
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    # DependsOn (sem mudan??as)
+    DependsOn: [ RDSInstance, PrivateRoute1, PrivateRoute2 ]
+    CreationPolicy:
+      ResourceSignal:
+        Count: 2
+        Timeout: PT15M 
+    Properties:
+      VPCZoneIdentifier:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      LaunchTemplate:
+        LaunchTemplateId: !Ref AppLaunchTemplate
+        Version: !GetAtt AppLaunchTemplate.LatestVersionNumber
+      MinSize: '2'
+      MaxSize: '4'
+      DesiredCapacity: '2'
+      TargetGroupARNs:
+        - !Ref ALBTargetGroup
+      HealthCheckType: ELB
+      HealthCheckGracePeriod: 300
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-Instance
+          PropagateAtLaunch: true
+
+  AppScalingPolicy:
+    Type: AWS::AutoScaling::ScalingPolicy
+    Properties:
+      AutoScalingGroupName: !Ref AutoScalingGroup
+      PolicyType: TargetTrackingScaling
+      TargetTrackingConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ASGAverageCPUUtilization
+        TargetValue: 50.0
+
+  # EFS (Sem mudan??as)
+  EfsFileSystem:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      Encrypted: true
+      FileSystemTags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-EFS
+  EfsMountTarget1:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EfsFileSystem
+      SubnetId: !Ref PrivateSubnet1
+      SecurityGroups:
+        - !Ref EfsSecurityGroup
+  EfsMountTarget2:
+    Type: AWS::EFS::MountTarget
+    Properties:
+      FileSystemId: !Ref EfsFileSystem
+      SubnetId: !Ref PrivateSubnet2
+      SecurityGroups:
+        - !Ref EfsSecurityGroup
+
+  # --- MUDAN??A AQUI: RDS usa db.t3.micro (que ?? Free Tier) ---
+  DBSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: "Subnet group for RDS"
+      SubnetIds:
+        - !Ref PrivateSubnet1
+        - !Ref PrivateSubnet2
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-RDS-SubnetGroup
+  RDSInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBName: !Ref DbName
+      MasterUsername: !Ref DbUser
+      MasterUserPassword: !Ref DbPassword
+      DBInstanceClass: db.t3.micro # <-- t3.micro ?? Free Tier para RDS
+      Engine: mysql
+      EngineVersion: '8.0'
+      AllocatedStorage: '20'
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VPCSecurityGroups:
+        - !Ref RdsSecurityGroup
+      MultiAZ: true
+      StorageType: gp2
+      BackupRetentionPeriod: 7
+      DeleteAutomatedBackups: true
+      DeletionProtection: false
+      Tags:
+        - Key: Name
+          Value: !Sub ${ProjectName}-RDS
+
+Outputs:
+  ApplicationLoadBalancerDNS:
+    Description: DNS name of the Application Load Balancer
+    Value: !GetAtt ApplicationLoadBalancer.DNSName
+    Export:
+      Name: !Sub ${ProjectName}-ALB-DNS
+  BastionHostPublicIP:
+    Description: Public IP address of the Bastion Host
+    Value: !GetAtt BastionHost.PublicIp
+    Export:
+      Name: !Sub ${ProjectName}-Bastion-IP
+  RDSInstanceEndpoint:
+    Description: Endpoint address of the RDS MySQL instance
+    Value: !GetAtt RDSInstance.Endpoint.Address
+    Export:
+      Name: !Sub ${ProjectName}-RDS-Endpoint
+  EFSFileSystemId:
+    Description: ID of the EFS File System
+    Value: !Ref EfsFileSystem
+    Export:
+      Name: !Sub ${ProjectName}-EFS-ID
+  VPCId:
+    Description: VPC ID
+    Value: !Ref VPC
+    Export:
+      Name: !Sub ${ProjectName}-VPC-ID
