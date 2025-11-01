@@ -82,13 +82,13 @@ Conforme a imagem `EFS.jpg`:
 Este é o ponto central do design da rede, provado pelas regras de entrada (inbound) dos Security Groups:
 
 1.  **Internet -> ALB:** O `AlbSecurityGroup` permite tráfego `HTTP` (porta 80) vindo de qualquer lugar (`0.0.0.0/0`).
-    ![Security Group do ALB](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Grupos%20de%20Seguran%C3%A7a.jpg)
+    ![Security Group do ALB](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Grupos%20de%20Seguran%C3%A7a.png)
 
 2.  **ALB -> Aplicação:** O `AppSecurityGroup` permite tráfego `HTTP` (porta 80) **APENAS** vindo do Security Group do ALB (`sg-03ebd...`).
-    ![Security Group da Aplicação](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Grupo%20de%20Seguran%C3%A7a%20Stack.jpg)
+    ![Security Group da Aplicação](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Grupo%20de%20Seguran%C3%A7a%20Stack.png)
 
 3.  **Aplicação -> RDS:** O `RdsSecurityGroup` permite tráfego `MySQL` (porta 3306) **APENAS** vindo do Security Group da Aplicação (`sg-0b3d...`).
-    ![Security Group do RDS](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Grupo%20Seguran%C3%A7a%20RDS.jpg)
+    ![Security Group do RDS](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Grupos%20de%20Seguran%C3%A7a.png)
 
 Este fluxo prova o princípio do menor privilégio, onde cada componente só pode ser acessado pela camada estritamente necessária.
 
@@ -96,4 +96,4 @@ Este fluxo prova o princípio do menor privilégio, onde cada componente só pod
 
 A imagem abaixo mostra todos os 35 recursos (VPC, Subnets, Rotas, Gateways, SGs, Instâncias, etc.) criados e gerenciados pela stack do CloudFormation.
 
-![Lista de Recursos da Stack](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Recursos.jpg)
+![Lista de Recursos da Stack](https://github.com/JeffersonPenPen/AcademiaGlobotech/blob/main/fase_8/assets/Recursos.png)
