@@ -34,7 +34,6 @@ Parameters:
     Default: 10.0.4.0/24
     Description: The CIDR block for the private subnet in the second Availability Zone.
 
-  # --- MUDAN??A AQUI: Default para t4g.small (Free Tier ARM) ---
   Ec2InstanceType:
     Type: String
     Default: t4g.small
@@ -64,14 +63,13 @@ Parameters:
     Type: AWS::EC2::KeyPair::KeyName
     Description: Name of an existing EC2 KeyPair to enable SSH access to the instances.
 
-  # --- MUDAN??A AQUI: AMI para ARM64 (Graviton) ---
   LatestAmiId:
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
     Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2
     Description: Latest Amazon Linux 2 AMI ID for ARM64 (t4g)
 
 Resources:
-  # VPC e Rede (Sem mudan??as)
+  # VPC e Rede
   VPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -217,7 +215,7 @@ Resources:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable2
 
-  # Security Groups (Porta 80 para App, sem mudan??as)
+  # Security Groups (Porta 80 para App)
   BastionSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -292,7 +290,7 @@ Resources:
         - Key: Name
           Value: !Sub ${ProjectName}-EFS-SG
 
-  # --- MUDAN??A AQUI: Bastion Host usa o par??metro (t4g.small) ---
+  # --- MUDANÇA AQUI: Bastion Host usa o parâmetro (t4g.small) ---
   BastionHost:
     Type: AWS::EC2::Instance
     Properties:
@@ -309,7 +307,7 @@ Resources:
         - Key: Name
           Value: !Sub ${ProjectName}-Bastion
 
-  # ALB (Sem mudan??as, porta 80)
+  # ALB (porta 80)
   ApplicationLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
@@ -352,7 +350,7 @@ Resources:
         - Type: forward
           TargetGroupArn: !Ref ALBTargetGroup
 
-  # IAM (Sem mudan??as)
+  # IAM (Sem mudanças)
   JwtSecret:
     Type: AWS::SecretsManager::Secret
     Properties:
@@ -395,7 +393,7 @@ Resources:
     Properties:
       LaunchTemplateName: !Sub ${ProjectName}-Launch-Template
       LaunchTemplateData:
-        # --- MUDAN??A AQUI: Usa o par??metro (t4g.small) ---
+        # --- MUDANÇA AQUI: Usa o parâmetro (t4g.small) ---
         InstanceType: !Ref Ec2InstanceType
         IamInstanceProfile:
           Arn: !GetAtt Ec2InstanceProfile.Arn
@@ -403,11 +401,11 @@ Resources:
           - !Ref AppSecurityGroup
         ImageId: !Ref LatestAmiId
         KeyName: !Ref KeyName
-        # UserData (sem mudan??as, PHP roda em ARM)
+        # UserData (PHP roda em ARM)
         UserData:
           Fn::Base64: !Sub |
             #!/bin/bash -xe
-            # 1. Instala Apache, PHP 7.4, Git, e utilit??rios EFS
+            # 1. Instala Apache, PHP 7.4, Git, utilitários EFS
             yum update -y
             amazon-linux-extras install -y php7.4
             yum install -y httpd git amazon-efs-utils
@@ -421,7 +419,7 @@ Resources:
             mkdir -p $EFS_DIR
             mount -t efs -o tls $EFS_ID:/ $EFS_DIR
             
-            # 3. Cria a aplica????o (S?? RODA NA PRIMEIRA INST??NCIA)
+            # 3. Cria a aplicação
             if [ ! -f /var/www/html/index.php ]; then
               
               # Cria config.php com os dados do RDS
@@ -515,9 +513,9 @@ Resources:
             </div></body></html>
             EOF
 
-            fi # Fim do 'if' da primeira inst??ncia
+            fi # Fim do 'if' da primeira instância
             
-            # 4. Ajusta permiss??es do EFS para o Apache
+            # 4. Ajusta permissões do EFS para o Apache
             chown -R apache:apache /var/www/html
             
             # 5. Inicia o Apache
@@ -529,7 +527,7 @@ Resources:
 
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
-    # DependsOn (sem mudan??as)
+    # DependsOn (sem mudanças)
     DependsOn: [ RDSInstance, PrivateRoute1, PrivateRoute2 ]
     CreationPolicy:
       ResourceSignal:
@@ -564,7 +562,7 @@ Resources:
           PredefinedMetricType: ASGAverageCPUUtilization
         TargetValue: 50.0
 
-  # EFS (Sem mudan??as)
+  # EFS (Sem mudanças)
   EfsFileSystem:
     Type: AWS::EFS::FileSystem
     Properties:
@@ -587,7 +585,7 @@ Resources:
       SecurityGroups:
         - !Ref EfsSecurityGroup
 
-  # --- MUDAN??A AQUI: RDS usa db.t3.micro (que ?? Free Tier) ---
+  # --- MUDANÇA AQUI: RDS usa db.t3.micro (Free Tier) ---
   DBSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
@@ -604,7 +602,7 @@ Resources:
       DBName: !Ref DbName
       MasterUsername: !Ref DbUser
       MasterUserPassword: !Ref DbPassword
-      DBInstanceClass: db.t3.micro # <-- t3.micro ?? Free Tier para RDS
+      DBInstanceClass: db.t3.micro # <-- t3.micro Free Tier para RDS
       Engine: mysql
       EngineVersion: '8.0'
       AllocatedStorage: '20'
